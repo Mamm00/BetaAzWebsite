@@ -1,0 +1,19 @@
+---
+/**
+ * ShadeSwatch — 4px radius chip (§7 surfaces), labelled, no colour-only meaning.
+ */
+export interface Props {
+  ar: string;
+  en: string;
+  hex: string;
+  locale: 'ar' | 'en';
+}
+
+const { ar, en, hex, locale } = Astro.props;
+const name = locale === 'ar' ? ar : en;
+---
+
+<span class="azt-chip" style="gap: 10px; padding: 6px 12px 6px 6px;">
+  <span aria-hidden="true" style={`display: inline-block; width: 28px; height: 28px; border-radius: var(--azt-swatch-radius); background: ${hex}; border: 1px solid var(--azt-hairline);`}></span>
+  <span class="azt-mono" style="font-size: 0.78rem;">{name}</span>
+</span>

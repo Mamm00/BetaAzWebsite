@@ -1,0 +1,28 @@
+---
+/**
+ * StickyActionBar — mobile sticky bar on product pages (§10).
+ * Never exceeds 30vh on mobile (§6.9) — handled in tokens.css .azt-sticky.
+ */
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { priceLabel } from '../lib/content';
+import { waLink } from '../lib/wa';
+import type { Fabric } from '../lib/schema';
+
+export interface Props {
+  fabric: Fabric;
+  locale: Locale;
+}
+
+const { fabric, locale } = Astro.props;
+---
+
+<div class="azt-sticky azt-action-bar" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-block-start: 1px solid var(--azt-hairline);">
+  <div style="display: flex; flex-direction: column;">
+    <span style="font-size: 0.78rem; color: var(--color-ink-500);">{t(locale, 'product.price')}</span>
+    <strong class="azt-mono">{priceLabel(fabric.pricePerMetre, locale)}<span style="font-weight: 400; font-size: 0.8rem; color: var(--color-ink-500);">/{t(locale, 'common.metresShort')}</span></strong>
+  </div>
+  <a class="azt-btn" href={waLink(locale === 'ar' ? `مرحباً الأزهر تكس، مهتم بـ ${fabric.code} — ${fabric.name.ar} (درجة ${fabric.grade})` : `Hi Al Azhar Tex, interested in ${fabric.code} — ${fabric.name.en} (grade ${fabric.grade})`)} target="_blank" rel="noopener" style="min-height: 40px;">
+    {t(locale, 'product.waInquire')}
+  </a>
+</div>

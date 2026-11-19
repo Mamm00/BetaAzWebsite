@@ -1,0 +1,62 @@
+---
+/**
+ * WholesalePage (§10) — terms, quantities, supply.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COMPANY } from '../data/company';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { waLink } from '../lib/wa';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PhoneRow from '../components/PhoneRow.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const benefits = [
+  { title: 'gradesTitle', body: 'benefit1Body' },
+  { title: 'benefit2Title', body: 'benefit2Body' },
+  { title: 'benefit3Title', body: 'benefit3Body' },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'wholesale.title')} · ${COMPANY.nameAr}`}
+  description={t(locale, 'wholesale.subtitle')}
+  path="wholesale"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.wholesale') }]} />
+    <h1 style="margin: 0;">{t(locale, 'wholesale.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'wholesale.subtitle')}</p>
+
+    <div class="azt-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-block-start: 40px;">
+      {benefits.map((b) => (
+        <section class="azt-card" style="padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+          <h2 style="margin: 0; font-size: 1.1rem;">{t(locale, `wholesale.${b.title}`)}</h2>
+          <p style="margin: 0; color: var(--color-ink-700);">{t(locale, `wholesale.${b.body}`)}</p>
+        </section>
+      ))}
+    </div>
+
+    <section class="azt-cv" style={`margin-block-top: 48px; padding: clamp(28px, 4vw, 48px); background: var(--color-ink-900); color: var(--color-sand-50); border-radius: var(--azt-radius); display: flex; flex-direction: column; gap: 20px; align-items: flex-start;`}>
+      <h2 style={`margin: 0; color: var(--color-sand-50);`}>{t(locale, 'wholesale.cta')}</h2>
+      <p style={`margin: 0; color: rgba(247, 243, 236, 0.85); max-width: 60ch;`}>{t(locale, 'wholesale.moqNote')}</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a class="azt-btn" style={`background: var(--color-giza); border-color: var(--color-giza);`} href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener">{t(locale, 'wa.label')}</a>
+        <a class="azt-btn azt-btn-ghost" style="color: var(--color-sand-50); border-color: var(--color-sand-50);" href={locUrl(locale, 'contact')}>{t(locale, 'nav.contact')}</a>
+      </div>
+    </section>
+
+    <section style="margin-block-top: 48px;">
+      <h2 style="font-size: 1.1rem;">{t(locale, 'gallery.phonesTitle')}</h2>
+      <div>
+        <PhoneRow display={COMPANY.phone1Display} href={`tel:${COMPANY.phone1}`} locale={locale} />
+        <PhoneRow display={COMPANY.phone2Display} href={`tel:${COMPANY.phone2}`} locale={locale} />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

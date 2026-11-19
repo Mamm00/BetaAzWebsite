@@ -1,0 +1,111 @@
+---
+/**
+ * GradesPage (§10) — three bands A→B→C with macro evidence, bullets,
+ * price implication, typical buyer, founder statement, sticky in-page nav.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fabricArt } from '../lib/fabricArt';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { grades, getGrade } from '../lib/content';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import GradeChip from '../components/GradeChip.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const accentVar: Record<string, string> = { ok: 'var(--color-ok)', indigo: 'var(--color-indigo)', madder: 'var(--color-madder)' };
+const seeds: Record<string, number> = { A: 101, B: 202, C: 303 };
+const shadeFor: Record<string, string> = { A: '#3F6B4A', B: '#1E3050', C: '#8C3B2E' };
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'grades.title')} · ${t(locale, 'nav.grades')}`}
+  description={t(locale, 'grades.subtitle')}
+  path="grades"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.grades') }]} />
+    <h1 style="margin: 0;">{t(locale, 'grades.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'grades.subtitle')}</p>
+
+    <!-- sticky in-page nav -->
+    <nav class="azt-sticky" aria-label={locale === 'ar' ? 'تصفح الدرجات' : 'Grades'} style="inset-block-start: 84px; margin-block: 32px; padding: 10px 14px; display: flex; gap: 16px; flex-wrap: wrap; background: var(--color-sand-50); border: 1px solid var(--azt-hairline); border-radius: var(--azt-radius); z-index: 30;">
+      {grades.map((g) => (
+        <a href={`#grade-${g.grade}`} style={`font-weight: 600; color: ${accentVar[g.accent]}; text-decoration: none;`}>
+          {locale === 'ar' ? g.name.ar : g.name.en}
+        </a>
+      ))}
+    </nav>
+
+    <!-- comparison strip: visible, not described -->
+    <section class="azt-cv" style="margin-block: 48px;">
+      <h2>{t(locale, 'grades.compareTitle')}</h2>
+      <div class="azt-grid" style="grid-template-columns: repeat(3, 1fr); gap: 20px; margin-block-start: 24px;">
+        {grades.map((g, i) => (
+          <figure class="azt-card" style="padding: 0; overflow: hidden; margin: 0;">
+            <div set:html={fabricArt({ seed: seeds[g.grade]! + i * 31, shade: shadeFor[g.grade]!, grade: g.grade, construction: 'plain', w: 800, h: 1000 })} style="aspect-ratio: 4 / 5;" />
+            <figcaption style="padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+              <GradeChip grade={g} locale={locale} />
+              <span style={`font-weight: 700; color: ${accentVar[g.accent]};`}>{locale === 'ar' ? g.name.ar : g.name.en}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <!-- the three bands -->
+    {grades.map((g) => (
+      <section id={`grade-${g.grade}`} class="azt-cv" style={`scroll-margin-block-start: 140px; margin-block: 64px;`} aria-labelledby={`gh-${g.grade}`}>
+        <div class="azt-grid" style={`grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;`}>
+          <div class="azt-card" style="overflow: hidden; position: sticky; inset-block-start: 120px;">
+            <div set:html={fabricArt({ seed: seeds[g.grade]!, shade: shadeFor[g.grade]!, grade: g.grade, construction: g.grade === 'C' ? 'plain' : 'satin', w: 1000, h: 1250 })} style="aspect-ratio: 4 / 5;" />
+          </div>
+          <div>
+            <div style={`display: flex; align-items: center; gap: 12px; flex-wrap: wrap;`}>
+              <GradeChip grade={g} locale={locale} />
+              <h2 id={`gh-${g.grade}`} style={`margin: 0; color: ${accentVar[g.accent]};`}>{locale === 'ar' ? g.name.ar : g.name.en}</h2>
+            </div>
+            <p style="color: var(--color-ink-700); margin-block-start: 12px;">{locale === 'ar' ? g.description.ar : g.description.en}</p>
+            <p style={`margin-block-start: 16px; color: ${accentVar[g.accent]};`}>
+              <strong>{locale === 'ar' ? g.priceImplication.ar : g.priceImplication.en}</strong>
+            </p>
+            <p style="color: var(--color-ink-700);">
+              <strong>{locale === 'ar' ? g.typicalBuyer.ar : g.typicalBuyer.en}</strong>
+            </p>
+            <h3 style="font-size: 1rem;">{t(locale, `grades.${g.grade.toLowerCase()}.bulletsTitle`)}</h3>
+            <ul style={`display: grid; gap: 8px; padding-inline-start: 20px; color: var(--color-ink-700);`}>
+              {(locale === 'ar' ? g.bullets.ar : g.bullets.en).map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+            <div style={`margin-block-start: 20px; display: flex; gap: 8px; flex-wrap: wrap;`}>
+              <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'fabrics')}>{t(locale, 'nav.fabrics')}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- founder statement -->
+    <section class="azt-cv" style={`margin-block-top: 80px; padding: clamp(32px, 5vw, 64px); background: var(--color-sand-100); border-radius: var(--azt-radius);`}>
+      <h2 style="margin-top: 0;">{t(locale, 'grades.statementTitle')}</h2>
+      <p style={`font-size: 1.15rem; color: var(--color-ink-700); max-width: 68ch;`}>{t(locale, 'grades.statement')}</p>
+      <p class="azt-mono" style="color: var(--color-ink-500); margin-block-start: 20px;">{t(locale, 'grades.statementSigned')}</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  @media (max-width: 1024px) {
+    .azt-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .azt-card[style*='sticky'] {
+      position: static !important;
+    }
+  }
+</style>

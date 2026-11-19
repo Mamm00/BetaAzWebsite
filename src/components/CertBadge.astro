@@ -1,0 +1,18 @@
+---
+/**
+ * CertBadge — certification chip. Values render TBD until supplied (§1).
+ */
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+
+export interface Props {
+  label: string;
+  locale: Locale;
+}
+
+const { label, locale } = Astro.props;
+---
+
+<span class="azt-chip" style="font-size: 0.72rem;">
+  {label} <span class="azt-mono azt-grade-c">{t(locale, 'common.tbd')}</span>
+</span>

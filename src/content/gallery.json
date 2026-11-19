@@ -1,0 +1,72 @@
+[
+  {
+    "id": "frontage",
+    "role": "gallery-frontage",
+    "src": "/media/gallery-frontage.jpg",
+    "source": "photo",
+    "alt": {
+      "ar": "واجهة معرض الأزهر تكس مقابل موقف أبو حماد",
+      "en": "Al Azhar Tex gallery frontage opposite Abu Hammad station"
+    },
+    "caption": {
+      "ar": "واجهة المعرض — مقابل موقف أبو حماد مباشرة",
+      "en": "The gallery frontage — directly opposite Abu Hammad station"
+    }
+  },
+  {
+    "id": "floor-1",
+    "role": "gallery-floor",
+    "src": "/media/gallery-floor-1.jpg",
+    "source": "photo",
+    "alt": {
+      "ar": "أرضية معرض الأزهر تكس والرفوف",
+      "en": "Al Azhar Tex gallery floor and shelving"
+    },
+    "caption": {
+      "ar": "أرضية المعرض — كل الدرجات على الرف",
+      "en": "The gallery floor — every grade on the shelf"
+    }
+  },
+  {
+    "id": "floor-2",
+    "role": "gallery-floor",
+    "src": "/media/gallery-floor-2.jpg",
+    "source": "photo",
+    "alt": {
+      "ar": "تفصيل على رف المعرض",
+      "en": "Detail on the gallery shelf"
+    },
+    "caption": {
+      "ar": "تفصيل على الرف — القطع مصنفة بالدرجة",
+      "en": "Detail on the shelf — bolts sorted by grade"
+    }
+  },
+  {
+    "id": "floor-3",
+    "role": "gallery-floor",
+    "src": "/media/gallery-floor-3.jpg",
+    "source": "photo",
+    "alt": {
+      "ar": "منظر داخلي لمعرض الأزهر تكس",
+      "en": "Interior view of Al Azhar Tex gallery"
+    },
+    "caption": {
+      "ar": "داخل المعرض — تعال وافحص الstock بنفسك",
+      "en": "Inside the gallery — come and inspect the stock yourself"
+    }
+  },
+  {
+    "id": "fabric-detail",
+    "role": "gallery-floor",
+    "src": "/media/fabric-photo-01.jpg",
+    "source": "photo",
+    "alt": {
+      "ar": "تفصيل قماش تحت ضوء المعرض",
+      "en": "Fabric detail under gallery light"
+    },
+    "caption": {
+      "ar": "القماش تحت الضوء الحقيقي — قبل ما تقرر",
+      "en": "The fabric under real light — before you decide"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+---
+/**
+ * RenderTag — honesty chip on every generated image (§21.1).
+ */
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<span class="azt-chip" style="background: var(--color-ink-900); color: var(--color-sand-50); border-color: var(--color-ink-900); font-size: 0.72rem; padding: 3px 9px;" title={locale === 'ar' ? 'الصورة توليد تقديري — مش صورة حقيقية' : 'Image generated — not a photograph'}>
+  {locale === 'ar' ? 'تصوير تقديري' : t(locale, 'render.tag')}
+</span>

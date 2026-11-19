@@ -1,0 +1,161 @@
+---
+/**
+ * Dynamic route — every localized public page (§9). Arabic default at "/",
+ * /ar/ redirects to /; /en/ renders the EN home.
+ */
+import HomePage from '../../views/HomePage.astro';
+import CatalogPage from '../../views/CatalogPage.astro';
+import ProductPage from '../../views/ProductPage.astro';
+import GradesPage from '../../views/GradesPage.astro';
+import GalleryPage from '../../views/GalleryPage.astro';
+import CategoriesIndexPage from '../../views/CategoriesIndexPage.astro';
+import TradeDeskPage from '../../views/TradeDeskPage.astro';
+import SampleListPage from '../../views/SampleListPage.astro';
+import WholesalePage from '../../views/WholesalePage.astro';
+import AboutPage from '../../views/AboutPage.astro';
+import JournalIndexPage from '../../views/JournalIndexPage.astro';
+import JournalArticlePage from '../../views/JournalArticlePage.astro';
+import ApiDocsPage from '../../views/ApiDocsPage.astro';
+import ContactPage from '../../views/ContactPage.astro';
+import LegalPage from '../../views/LegalPage.astro';
+import MatchPage from '../../views/MatchPage.astro';
+import TwinStudioPage from '../../views/TwinStudioPage.astro';
+import LightRoomPage from '../../views/LightRoomPage.astro';
+import WashLabPage from '../../views/WashLabPage.astro';
+import BenchPage from '../../views/BenchPage.astro';
+import ProvenancePage from '../../views/ProvenancePage.astro';
+import SwapPage from '../../views/SwapPage.astro';
+import HandoffPage from '../../views/HandoffPage.astro';
+import AdminPage from '../../views/AdminPage.astro';
+import { fabrics, journal } from '../../lib/content';
+import type { Locale } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const paths: Array<{ params: { locale: string; slug: string } }> = [];
+  const locales: Locale[] = ['ar', 'en'];
+
+  const staticSlugs = [
+    'fabrics',
+    'grades',
+    'gallery',
+    'categories',
+    'trade-desk',
+    'sample-list',
+    'wholesale',
+    'about',
+    'journal',
+    'api',
+    'contact',
+    'legal/privacy',
+    'legal/terms',
+    'match',
+    'twin-studio',
+    'light-room',
+    'wash-lab',
+    'bench',
+    'provenance',
+    'swap',
+    'handoff',
+  ];
+
+  for (const locale of locales) {
+    // home: AR at "/", EN at "/en/"
+    paths.push({ params: { locale, slug: '' } });
+    for (const slug of staticSlugs) {
+      paths.push({ params: { locale, slug: slug } });
+    }
+    for (const f of fabrics) {
+      paths.push({ params: { locale, slug: `fabrics/${f.slug}` } });
+    }
+    for (const c of ['womens-apparel', 'shirting', 'jersey-knit', 'lace-tulle', 'home-textiles', 'linings', 'surplus']) {
+      paths.push({ params: { locale, slug: `categories/${c}` } });
+    }
+    for (const j of journal) {
+      paths.push({ params: { locale, slug: `journal/${j.slug}` } });
+    }
+    // admin routes — noindex, out of sitemap
+    for (const a of [
+      'admin',
+      'admin/login',
+      'admin/dashboard',
+      'admin/fabrics',
+      'admin/fabrics/new',
+      'admin/categories',
+      'admin/grades',
+      'admin/journal',
+      'admin/gallery',
+      'admin/company',
+      'admin/translations',
+      'admin/media',
+      'admin/generate',
+      'admin/publish',
+      'admin/settings',
+    ]) {
+      paths.push({ params: { locale, slug: a } });
+    }
+  }
+  return paths;
+}
+
+const { locale } = Astro.params;
+const slug = (Astro.params.slug ?? '').split('/');
+
+const l = (locale === 'en' ? 'en' : 'ar') as Locale;
+
+const fabric = slug[0] === 'fabrics' && slug[1] ? fabrics.find((f) => f.slug === slug[1]) : undefined;
+const article = slug[0] === 'journal' && slug[1] ? journal.find((j) => j.slug === slug[1]) : undefined;
+---
+
+{
+  slug[0] === 'admin' ? (
+    <AdminPage locale={l} adminPath={slug.slice(1).join('/')} />
+  ) : slug[0] === 'fabrics' && fabric ? (
+    <ProductPage locale={l} fabric={fabric} />
+  ) : slug[0] === 'fabrics' ? (
+    <CatalogPage locale={l} />
+  ) : slug[0] === 'categories' && slug[1] ? (
+    <CatalogPage locale={l} categorySlug={slug[1]} />
+  ) : slug[0] === 'categories' ? (
+    <CategoriesIndexPage locale={l} />
+  ) : slug[0] === 'journal' && article ? (
+    <JournalArticlePage locale={l} article={article} />
+  ) : slug[0] === 'journal' ? (
+    <JournalIndexPage locale={l} />
+  ) : slug[0] === 'grades' ? (
+    <GradesPage locale={l} />
+  ) : slug[0] === 'gallery' ? (
+    <GalleryPage locale={l} />
+  ) : slug[0] === 'trade-desk' ? (
+    <TradeDeskPage locale={l} />
+  ) : slug[0] === 'sample-list' ? (
+    <SampleListPage locale={l} />
+  ) : slug[0] === 'wholesale' ? (
+    <WholesalePage locale={l} />
+  ) : slug[0] === 'about' ? (
+    <AboutPage locale={l} />
+  ) : slug[0] === 'api' ? (
+    <ApiDocsPage locale={l} />
+  ) : slug[0] === 'contact' ? (
+    <ContactPage locale={l} />
+  ) : slug[0] === 'legal' ? (
+    <LegalPage locale={l} kind={slug[1] === 'terms' ? 'terms' : 'privacy'} />
+  ) : slug[0] === 'match' ? (
+    <MatchPage locale={l} />
+  ) : slug[0] === 'twin-studio' ? (
+    <TwinStudioPage locale={l} />
+  ) : slug[0] === 'light-room' ? (
+    <LightRoomPage locale={l} />
+  ) : slug[0] === 'wash-lab' ? (
+    <WashLabPage locale={l} />
+  ) : slug[0] === 'bench' ? (
+    <BenchPage locale={l} />
+  ) : slug[0] === 'provenance' ? (
+    <ProvenancePage locale={l} />
+  ) : slug[0] === 'swap' ? (
+    <SwapPage locale={l} />
+  ) : slug[0] === 'handoff' ? (
+    <HandoffPage locale={l} />
+  ) : (
+    <HomePage locale={l} />
+  )
+}

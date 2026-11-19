@@ -1,0 +1,71 @@
+{
+  "name": "Al Azhar Tex",
+  "nameAr": "الأزهر تكس",
+  "galleryName": "Al Azhar Tex Gallery",
+  "galleryNameAr": "معرض الأزهر تكس",
+  "address": {
+    "en": "Al Azhar Tex Gallery, Ziraa, Zagazig, Sharkia, Egypt — opposite Abu Hammad car station.",
+    "ar": "مصر، الشرقية، الزقازيق، الزراعة، بعد موقف أبو حماد — أمام موقف أبو حماد"
+  },
+  "landmark": {
+    "en": "in front of the Abu Hammad car station",
+    "ar": "أمام موقف أبو حماد"
+  },
+  "founder": {
+    "ar": "شادي أنور",
+    "en": "Shady Anwar"
+  },
+  "phones": [
+    {
+      "label": "Phone 1",
+      "display": "+20 100 360 0949",
+      "href": "tel:+201003600949"
+    },
+    {
+      "label": "Phone 2",
+      "display": "+20 120 175 4177",
+      "href": "tel:+201201754177"
+    }
+  ],
+  "whatsapp": [
+    "+201003600949",
+    "+201201754177"
+  ],
+  "hoursAssumed": true,
+  "hours": [
+    {
+      "day": "sat",
+      "from": "09:00",
+      "to": "18:00"
+    },
+    {
+      "day": "sun",
+      "from": "09:00",
+      "to": "18:00"
+    },
+    {
+      "day": "mon",
+      "from": "09:00",
+      "to": "18:00"
+    },
+    {
+      "day": "tue",
+      "from": "09:00",
+      "to": "18:00"
+    },
+    {
+      "day": "wed",
+      "from": "09:00",
+      "to": "18:00"
+    },
+    {
+      "day": "thu",
+      "from": "09:00",
+      "to": "18:00"
+    }
+  ],
+  "admin": {
+    "username": "admin",
+    "passwordHash": "8a344ad4ddecaab0444ec101fff2a422dd14f8cbd9557adbdbd66ffc6f6b3ac2"
+  }
+}

@@ -1,0 +1,49 @@
+---
+/**
+ * LangToggle — instant locale switch, persisted, path-preserving (§15).
+ * A real link: instant, keeps nothing to lose; click also persists choice.
+ */
+import { locUrl, otherLocale, type Locale } from '../lib/url';
+import { t } from '../lib/i18n';
+import { setLocale } from '../lib/store';
+
+export interface Props {
+  locale: Locale;
+  path?: string;
+  variant?: 'full' | 'compact';
+}
+
+const { locale, path = '', variant = 'full' } = Astro.props;
+const next = otherLocale(locale);
+const href = path === '' ? locUrl(next, '') : locUrl(next, path);
+const label = locale === 'ar' ? t('en', 'common.english') : t('ar', 'common.arabic');
+---
+
+<a
+  href={href}
+  class={variant === 'compact' ? 'azt-lang-toggle azt-lang-compact' : 'azt-lang-toggle'}
+  aria-label={`${t(locale, 'common.language')}: ${label}`}
+  onclick={`try{localStorage.setItem('azt:v1:locale', ${JSON.stringify(next)})}catch(e){}`}
+>
+  <span aria-hidden="true">{locale === 'ar' ? 'EN' : 'ع'}</span>
+  {variant === 'full' && <span>{label}</span>}
+</a>
+
+<style>
+  .azt-lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 6px 12px;
+    border: 1px solid var(--azt-hairline);
+    border-radius: var(--azt-radius);
+    background: var(--color-sand-50);
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .azt-lang-toggle:hover {
+    background: var(--color-sand-100);
+  }
+</style>

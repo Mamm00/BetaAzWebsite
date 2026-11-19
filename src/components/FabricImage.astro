@@ -1,0 +1,51 @@
+---
+/**
+ * FabricImage — explicit dimensions on every image (§6.1: no layout shift).
+ * Photos route through astro:assets with avif+webp srcset; renders render
+ * the deterministic local schematic (§21.1 honesty: tagged, never a photo).
+ */
+import { Image } from 'astro:assets';
+import { media } from '../assets/media';
+import { fabricArt } from '../lib/fabricArt';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import type { Fabric } from '../lib/schema';
+
+export interface Props {
+  fabric: Fabric;
+  variant?: 'card' | 'hero' | 'macro';
+  locale: Locale;
+  altAr?: string;
+  altEn?: string;
+  ratio?: '4:5' | '16:9' | '3:4';
+}
+
+const { fabric, variant = 'card', locale, altAr, altEn, ratio } = Astro.props;
+
+const dims =
+  variant === 'hero' ? { w: 1600, h: 900, css: '16 / 9' } :
+  variant === 'macro' ? { w: 1200, h: 1500, css: '4 / 5' } :
+  { w: 800, h: 1000, css: '4 / 5' };
+
+const alt = locale === 'ar' ? (altAr ?? t(locale, 'product.alt.hero', { name: fabric.name.ar })) : (altEn ?? t(locale, 'product.alt.hero', { name: fabric.name.en }));
+const cssRatio = ratio ?? dims.css;
+const photoUrl = media(fabric.photo);
+---
+
+<figure class="azt-fabric-img" style={`aspect-ratio: ${cssRatio}; margin: 0; overflow: hidden; background: var(--color-sand-100);`}>
+  {photoUrl ? (
+    <Image
+      src={photoUrl}
+      alt={alt}
+      width={dims.w}
+      height={dims.h}
+      widths={[400, 640, 800, 1000, 1280, 1600]}
+      sizes={variant === 'hero' ? '(min-width: 1024px) 100vw, 100vw' : '(min-width: 640px) 33vw, 100vw'}
+      loading={variant === 'hero' ? 'eager' : 'lazy'}
+      decoding="async"
+      style="width: 100%; height: 100%; object-fit: cover; display: block;"
+    />
+  ) : (
+    <div set:html={fabricArt({ seed: fabric.seed ?? 0, shade: fabric.shades[0]?.hex ?? '#C8A45C', grade: fabric.grade, construction: fabric.composition, w: dims.w, h: dims.h })} style="width: 100%; height: 100%;" />
+  )}
+</figure>

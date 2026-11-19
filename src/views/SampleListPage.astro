@@ -1,0 +1,32 @@
+---
+/**
+ * SampleListPage (§10) — the sample list surface.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import SampleListApp from '../components/SampleListApp.tsx';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'sample.title')} · ${t(locale, 'nav.sampleList')}`}
+  description={t(locale, 'sample.subtitle')}
+  path="sample-list"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.sampleList') }]} />
+    <h1 style="margin: 0;">{t(locale, 'sample.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'sample.subtitle')}</p>
+    <div style="margin-block-start: 32px;">
+      <SampleListApp locale={locale} client:load />
+    </div>
+  </div>
+</BaseLayout>

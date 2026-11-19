@@ -1,0 +1,92 @@
+---
+/**
+ * ContactPage (§10) — phones, WhatsApp, address, hours, quick enquiry form
+ * (client island). No server: form builds a WhatsApp link locally.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COMPANY } from '../data/company';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { waLink } from '../lib/wa';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import PhoneRow from '../components/PhoneRow.astro';
+import DirectionsLink from '../components/DirectionsLink.astro';
+import ContactForm from '../components/ContactForm.tsx';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const DAY_NAMES_AR: Record<string, string> = {
+  sat: 'السبت',
+  sun: 'الأحد',
+  mon: 'الاثنين',
+  tue: 'الثلاثاء',
+  wed: 'الأربعاء',
+  thu: 'الخميس',
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'contact.title')} · ${COMPANY.nameAr}`}
+  description={t(locale, 'contact.subtitle')}
+  path="contact"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.contact') }]} />
+    <h1 style="margin: 0;">{t(locale, 'contact.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'contact.subtitle')}</p>
+
+    <div class="azt-grid" style="grid-template-columns: 1fr 1fr; gap: 48px; margin-block-start: 40px; align-items: start;">
+      <div class="azt-cv" style="display: flex; flex-direction: column; gap: 32px;">
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'contact.phonesTitle')}</h2>
+          <div>
+            <PhoneRow display={COMPANY.phone1Display} href={`tel:${COMPANY.phone1}`} locale={locale} />
+            <PhoneRow display={COMPANY.phone2Display} href={`tel:${COMPANY.phone2}`} locale={locale} />
+          </div>
+        </section>
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'contact.whatsappTitle')}</h2>
+          <p style="color: var(--color-ink-700); margin-block-start: 8px;">
+            {COMPANY.whatsapp.map((p) => `+${p}`).join(' · ')}
+          </p>
+          <a class="azt-btn" style={`margin-block-start: 14px; background: var(--color-ok); border-color: var(--color-ok);`} href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener">{t(locale, 'wa.label')}</a>
+        </section>
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'contact.addressTitle')}</h2>
+          <p lang="ar" dir="rtl" style={`font-family: var(--font-naskh); font-weight: 700; margin-block-start: 10px;`}>{COMPANY.addressAr}</p>
+          <p style="color: var(--color-ink-700); margin-block-start: 10px;">{COMPANY.addressEn}</p>
+          <div style="margin-block-start: 14px;"><DirectionsLink locale={locale} /></div>
+        </section>
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'contact.hoursTitle')}</h2>
+          <ul style="list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; font-size: 0.9rem;">
+            {COMPANY.hours.map((h) => (
+              <li class="azt-mono" style="display: flex; justify-content: space-between; border-block-start: 1px solid var(--azt-hairline); padding: 8px 0;">
+                <span>{locale === 'ar' ? (DAY_NAMES_AR[h.day] ?? h.day) : h.day}</span>
+                <span>{h.from}–{h.to}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      <section class="azt-card azt-cv" style="padding: 28px;">
+        <h2 style="margin-top: 0; font-size: 1.15rem;">{t(locale, 'contact.formTitle')}</h2>
+        <ContactForm locale={locale} client:visible />
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  @media (max-width: 900px) {
+    .azt-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
