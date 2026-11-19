@@ -31,6 +31,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Sync Astro types
+        run: npx astro sync
+
       - name: Validate content
         run: npm run validate
 
