@@ -1,9 +1,9 @@
 name: Deploy — dual host
 
-# Dual deploy from one build (§28): GitHub Pages AND root domain.
-# The root-domain build (AZT_BASE=/) goes to Vercel via the connector;
-# the GitHub Pages build uses AZT_BASE=/BetaAzWebsite/ so internal links
-# resolve against the actual Pages serving path (mamm00.github.io/BetaAzWebsite/).
+# Deploy to GitHub Pages with custom domain (§28).
+# Builds with AZT_BASE=/ so internal links are root-relative and work at
+# the custom domain alazhartex.com. The CNAME file (alazhartex.com) is kept
+# so GitHub Pages serves the site at the custom domain root.
 
 on:
   push:
@@ -41,11 +41,8 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit
 
-      - name: Build (AZT_BASE=/BetaAzWebsite/)
-        run: AZT_BASE=/BetaAzWebsite/ npm run build
-
-      - name: Strip CNAME (root-domain only, keeps Pages on github.io)
-        run: rm -f dist/CNAME
+      - name: Build (AZT_BASE=/)
+        run: AZT_BASE=/ npm run build
 
       - uses: actions/configure-pages@v5
 
