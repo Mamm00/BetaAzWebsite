@@ -1,8 +1,9 @@
 name: Deploy — dual host
 
-# Dual deploy from one build (§28): GitHub Pages subpath AND root domain.
+# Dual deploy from one build (§28): GitHub Pages AND root domain.
 # The root-domain build (AZT_BASE=/) goes to Vercel via the connector;
-# the subpath build (AZT_BASE=/al-azhar-tex/) deploys to gh-pages here.
+# the GitHub Pages build uses AZT_BASE=/BetaAzWebsite/ so internal links
+# resolve against the actual Pages serving path (mamm00.github.io/BetaAzWebsite/).
 
 on:
   push:
@@ -40,8 +41,8 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit
 
-      - name: Build (AZT_BASE=/al-azhar-tex/)
-        run: AZT_BASE=/al-azhar-tex/ npm run build
+      - name: Build (AZT_BASE=/BetaAzWebsite/)
+        run: AZT_BASE=/BetaAzWebsite/ npm run build
 
       - uses: actions/configure-pages@v5
 
