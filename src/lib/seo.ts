@@ -23,12 +23,12 @@ export interface SeoMeta {
 }
 
 export function canonical(meta: SeoMeta): string {
-  const origin = meta.origin ?? 'https://alazhartex.com';
+  const origin = meta.origin ?? 'https://mamm00.github.io';
   return absUrl(`${meta.locale}/${meta.path}`, origin);
 }
 
 export function hreflangPairs(meta: SeoMeta): Array<{ rel: string; hreflang: string; href: string }> {
-  const origin = meta.origin ?? 'https://alazhartex.com';
+  const origin = meta.origin ?? 'https://mamm00.github.io';
   const pairs: Array<{ rel: string; hreflang: string; href: string }> = [];
   const arHref = absUrl(`ar/${meta.path}`, origin);
   const enHref = absUrl(`en/${meta.path}`, origin);

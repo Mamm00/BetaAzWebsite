@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# Sitemap (root domain)
-Sitemap: https://alazhartex.com/sitemap-index.xml
+# Sitemap
+Sitemap: https://mamm00.github.io/BetaAzWebsite/sitemap-index.xml

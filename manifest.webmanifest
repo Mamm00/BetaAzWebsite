@@ -1,0 +1,31 @@
+{
+  "name": "Al Azhar Tex — Fabric Gallery",
+  "short_name": "Al Azhar Tex",
+  "description": "Al Azhar Tex fabric gallery — premium textiles, graded openly, Zagazig, Egypt.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c0b09",
+  "theme_color": "#0c0b09",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
