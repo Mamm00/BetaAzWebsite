@@ -3,7 +3,7 @@
 _Autonomous continuous-improvement tracker. Updated each cycle._
 
 ## Repo / Deploy
-- **Branch:** `arena/bedf446f-betaazwebsite` (active)
+- **Branch:** `arena/fe0d3606-betaazwebsite` (active)
 - **Deploy target:** GitHub Pages → `alazhartex.com` (CNAME)
 - **Workflow:** `.github/workflows/deploy.yml` — `AZT_BASE=/` build, CNAME kept
 - **Pages source:** `legacy` (⚠ user must switch to **GitHub Actions**)
@@ -13,6 +13,14 @@ _Autonomous continuous-improvement tracker. Updated each cycle._
 - `npx tsc --noEmit` → clean (after media() type fix)
 - `npm run validate` → PASS (68 records, 6 collections, 2 locales)
 - `AZT_BASE=/ npm run build` → 205 pages (was 215; 2 categories × 2 locales = 4 category pages, down from 7×2=14)
+
+## Scorecard (live)
+- **Pages:** 205 built · **broken links:** 0 (8,374 internal checked)
+- **Meta coverage:** 100% (title / description / canonical / og:image on all pages)
+- **tsc:** clean · **validate:** PASS (68 records, 6 collections, 2 locales)
+- **Deploys:** GitHub Pages (legacy, not yet live) + Vercel production (live)
+- **Logo:** operator PHOENIX logo live (dark + light variants) — PR #12
+- **Blockers (human):** Pages → GitHub Actions; Squarespace DNS for alazhartex.com
 
 ## Cycle 1 — Image optimization (CRUSHED)
 **Problem found:** `media()` returned `.src` string → Astro `<Image>` bypassed its
@@ -113,6 +121,26 @@ build 205 pages (4 category pages, down from 14); **0 broken links** (8,374 chec
 old slugs fully purged from `dist/`. **Vercel redeployed** to production
 (`dpl_6jJu4dcvRpcHuEvpA6hE6z16bEVn`, commit `c59e8f4`, PROMOTED); both
 `/en/categories/womens-fabrics/` and `/en/categories/mens-fabrics/` verified live.
+
+## Cycle 9 — Brand logo replacement (USER DIRECTIVE)
+**Problem / directive:** Replace the generic inline SVG loom mark with the
+operator-supplied PHOENIX logo.
+
+**Fixes applied:**
+- Source was a 1536×1024 JPEG on a near-white background (mislabeled .png).
+- Processed into two transparent PNGs:
+  - `public/logo.png` — dark navy+red (for light surfaces: header, footer)
+  - `public/logo-light.png` — hue-preserved light recolour (for dark hero)
+- White background keyed out via brightness-alpha + unpremultiply (recovers
+  true logo colours); cropped to content bbox (947×916); quantized to 48 colours.
+- `src/components/Logo.astro` now renders the image mark + wordmark, picking the
+  variant by `tone` (dark→`/logo.png`, light→`/logo-light.png`).
+
+**Results:** dark logo 13KB / light logo 18KB (from 300KB/175KB). tsc clean;
+validate PASS; 0 broken links; build 205 pages. Header (36px) + footer (40px)
+use the dark variant, hero (96px) uses the light variant. PR #12 merged; Vercel
+redeployed (`dpl_HH4xwsnn39mLxDj8oKzsuuBxmCg8`, PROMOTED); homepage hero logo
+verified live at `https://al-azhar-tex.vercel.app/logo-light.png`.
 
 ## Open items (user-side, blocked)
 1. Switch Pages source → **GitHub Actions** (Settings → Pages) — still `legacy`
