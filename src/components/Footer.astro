@@ -7,6 +7,7 @@ import { locUrl, type Locale } from '../lib/url';
 import { t } from '../lib/i18n';
 import { waLink } from '../lib/wa';
 import LangToggle from './LangToggle.astro';
+import Logo from './Logo.astro';
 
 export interface Props {
   locale: Locale;
@@ -20,7 +21,7 @@ const year = new Date().getFullYear();
 <footer class="azt-footer azt-hairline-t" style="background: var(--color-sand-100); margin-block-start: 80px;">
   <div class="azt-container" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-block: 56px 32px;">
     <div>
-      <div class="azt-brand-ar" style="font-family: var(--font-naskh); font-weight: 700; font-size: 1.4rem;">{COMPANY.nameAr}</div>
+      <Logo size={40} wordmark={true} tone="dark" />
       <p style="margin-block-start: 12px; color: var(--color-ink-700); max-width: 46ch;">{t(locale, 'home.footerAbout')}</p>
       <p class="azt-mono" style="margin-block-start: 12px; font-size: 0.8rem; color: var(--color-ink-500);">{COMPANY.addressEn}</p>
     </div>
