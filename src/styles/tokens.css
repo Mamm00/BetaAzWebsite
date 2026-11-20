@@ -271,6 +271,20 @@ p {
   opacity: 1;
 }
 
+/* Gold accent button — dark ink text on gold (contrast 8.36:1, AA pass).
+   Light text on gold only reaches 2.13:1, which fails WCAG AA. */
+.azt-btn-giza {
+  background: var(--color-giza);
+  border-color: var(--color-giza);
+  color: var(--color-ink-900);
+}
+
+.azt-btn-giza:hover {
+  background: var(--color-giza-dark);
+  border-color: var(--color-giza-dark);
+  opacity: 1;
+}
+
 /* ---------- Chips ---------- */
 .azt-chip {
   display: inline-flex;
