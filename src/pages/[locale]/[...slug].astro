@@ -67,7 +67,7 @@ export async function getStaticPaths() {
     for (const f of fabrics) {
       paths.push({ params: { locale, slug: `fabrics/${f.slug}` } });
     }
-    for (const c of ['womens-apparel', 'shirting', 'jersey-knit', 'lace-tulle', 'home-textiles', 'linings', 'surplus']) {
+    for (const c of ['womens-fabrics', 'mens-fabrics']) {
       paths.push({ params: { locale, slug: `categories/${c}` } });
     }
     for (const j of journal) {

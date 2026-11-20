@@ -45,13 +45,8 @@ const navItems = [
         <div class="azt-card azt-dropdown" style="position: absolute; inset-block-start: 100%; inset-inline-end: 0; min-width: 220px; padding: 8px; display: none;">
           <style is:global>.azt-nav-cats[open] .azt-dropdown { display: block; }</style>
           <div class="azt-cat-grid">
-            <a href={locUrl(locale, 'categories/womens-apparel')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.fabrics')}</a>
-            <a href={locUrl(locale, 'categories/shirting')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Shirting</a>
-            <a href={locUrl(locale, 'categories/jersey-knit')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Jersey &amp; Knit</a>
-            <a href={locUrl(locale, 'categories/lace-tulle')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Lace &amp; Tulle</a>
-            <a href={locUrl(locale, 'categories/home-textiles')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.categories')}</a>
-            <a href={locUrl(locale, 'categories/linings')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Linings</a>
-            <a href={locUrl(locale, 'categories/surplus')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Surplus</a>
+            <a href={locUrl(locale, 'categories/womens-fabrics')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.womensFabrics')}</a>
+            <a href={locUrl(locale, 'categories/mens-fabrics')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.mensFabrics')}</a>
           </div>
         </div>
       </details>
@@ -79,7 +74,7 @@ const navItems = [
       {navItems.map((item) => (
         <a href={locUrl(locale, item.href)} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, item.key)}</a>
       ))}
-      <a href={locUrl(locale, 'categories/womens-apparel')} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.categories')}</a>
+      <a href={locUrl(locale, 'categories/womens-fabrics')} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.womensFabrics')}</a>
       <a href={locUrl(locale, 'trade-desk')} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.tradeDesk')}</a>
     </nav>
   </div>

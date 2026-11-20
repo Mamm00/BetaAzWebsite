@@ -3,7 +3,7 @@
 _Autonomous continuous-improvement tracker. Updated each cycle._
 
 ## Repo / Deploy
-- **Branch:** `arena/7da7288b-betaazwebsite` (active)
+- **Branch:** `arena/bedf446f-betaazwebsite` (active)
 - **Deploy target:** GitHub Pages → `alazhartex.com` (CNAME)
 - **Workflow:** `.github/workflows/deploy.yml` — `AZT_BASE=/` build, CNAME kept
 - **Pages source:** `legacy` (⚠ user must switch to **GitHub Actions**)
@@ -12,7 +12,7 @@ _Autonomous continuous-improvement tracker. Updated each cycle._
 ## Build gates
 - `npx tsc --noEmit` → clean (after media() type fix)
 - `npm run validate` → PASS (68 records, 6 collections, 2 locales)
-- `AZT_BASE=/ npm run build` → 215 pages
+- `AZT_BASE=/ npm run build` → 205 pages (was 215; 2 categories × 2 locales = 4 category pages, down from 7×2=14)
 
 ## Cycle 1 — Image optimization (CRUSHED)
 **Problem found:** `media()` returned `.src` string → Astro `<Image>` bypassed its
@@ -87,6 +87,30 @@ AA pass); applied to Provenance CTA + WhatsApp CTA.
 ## Cycle 7 — SVG patterns verified
 - `<pattern>` elements render correctly in built SVGs (mesh44, weft tiles)
 - validate PASS, 0 broken links after pattern refactor
+
+## Cycle 8 — Women's & Men's fabrics restructure (USER DIRECTIVE)
+**Problem / directive:** Company must trade in **women's and men's fabrics only**,
+with all known textile names/types for each gender. Supersedes the prior 7-category
+structure (womens-apparel, shirting, jersey-knit, lace-tulle, home-textiles, linings, surplus).
+
+**Fixes applied:**
+- `categories.json` rewritten to exactly **2 categories**: `womens-fabrics`
+  (الأقمشة النسائية) and `mens-fabrics` (الأقمشة الرجالية), each with ar/en name +
+  description enumerating the known textile types (Chiffon, Georgette, Crepe, Satin,
+  Voile, Lace, Tulle, Jacquard Brocade, Viscose for women's; Poplin, Twill, Lycra Jersey,
+  Scuba Knit, Linen Blend, Crepe, Satin/Twill linings for men's).
+- `fabrics.json` — all 60 fabrics (AZT-001–060, ×A/B/C grades) **reclassified** by
+  textile type: **33 women's, 27 men's, 0 unmatched** (scripted remap of `category`).
+- `src/pages/[locale]/[...slug].astro` — category route list → `['womens-fabrics','mens-fabrics']`.
+- `Header.astro` — nav dropdown + mobile nav rewired to the 2 new categories;
+  added `nav.womensFabrics` / `nav.mensFabrics` locale keys (en.json + ar.json).
+- `HomePage.astro` — category mosaic redesigned: 2-column grid, both gendered categories.
+- All category page rendering is dynamic (driven by `categories.json` + `categorySlug`),
+  so no per-category view edits were needed.
+
+**Results:** tsc clean; validate PASS (68 records, 6 collections, 2 locales);
+build 205 pages (4 category pages, down from 14); **0 broken links** (8,374 checked);
+old slugs fully purged from `dist/`.
 
 ## Open items (user-side, blocked)
 1. Switch Pages source → **GitHub Actions** (Settings → Pages) — still `legacy`

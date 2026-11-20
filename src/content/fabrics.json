@@ -9,7 +9,7 @@
       "en": "Crepe Georgette"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "poly crepe",
     "construction": {
       "ar": "سُداة بسيطة · معاملة كريب",
@@ -74,7 +74,7 @@
       "en": "Crepe Georgette"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "poly crepe",
     "construction": {
       "ar": "سُداة بسيطة · معاملة كريب",
@@ -144,7 +144,7 @@
       "en": "Crepe Georgette"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "poly crepe",
     "construction": {
       "ar": "سُداة بسيطة · معاملة كريب",
@@ -209,7 +209,7 @@
       "en": "Georgette Chiffon"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -279,7 +279,7 @@
       "en": "Georgette Chiffon"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -344,7 +344,7 @@
       "en": "Georgette Chiffon"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -409,7 +409,7 @@
       "en": "Viscose Chiffon"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -474,7 +474,7 @@
       "en": "Viscose Chiffon"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -539,7 +539,7 @@
       "en": "Viscose Chiffon"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -604,7 +604,7 @@
       "en": "Silk-Touch Satin"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -674,7 +674,7 @@
       "en": "Silk-Touch Satin"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -744,7 +744,7 @@
       "en": "Silk-Touch Satin"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -814,7 +814,7 @@
       "en": "Cotton Voile"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "cotton voile",
     "construction": {
       "ar": "سُداة بسيطة · غازد",
@@ -879,7 +879,7 @@
       "en": "Cotton Voile"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "cotton voile",
     "construction": {
       "ar": "سُداة بسيطة · غازد",
@@ -949,7 +949,7 @@
       "en": "Cotton Voile"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "cotton voile",
     "construction": {
       "ar": "سُداة بسيطة · غازد",
@@ -1019,7 +1019,7 @@
       "en": "Viscose Crepe"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "viscose",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -1084,7 +1084,7 @@
       "en": "Viscose Crepe"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "viscose",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -1154,7 +1154,7 @@
       "en": "Viscose Crepe"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "viscose",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -1224,7 +1224,7 @@
       "en": "Printed Chiffon"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -1289,7 +1289,7 @@
       "en": "Printed Chiffon"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -1354,7 +1354,7 @@
       "en": "Printed Chiffon"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -1419,7 +1419,7 @@
       "en": "Jacquard Brocade"
     },
     "grade": "A",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "brocade",
     "construction": {
       "ar": "جاكاردا · أرضية سَتْن",
@@ -1484,7 +1484,7 @@
       "en": "Jacquard Brocade"
     },
     "grade": "B",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "brocade",
     "construction": {
       "ar": "جاكاردا · أرضية سَتْن",
@@ -1554,7 +1554,7 @@
       "en": "Jacquard Brocade"
     },
     "grade": "C",
-    "category": "womens-apparel",
+    "category": "womens-fabrics",
     "composition": "brocade",
     "construction": {
       "ar": "جاكاردا · أرضية سَتْن",
@@ -1619,7 +1619,7 @@
       "en": "Cotton Poplin"
     },
     "grade": "A",
-    "category": "shirting",
+    "category": "mens-fabrics",
     "composition": "cotton",
     "construction": {
       "ar": "سُداة بسيطة",
@@ -1684,7 +1684,7 @@
       "en": "Cotton Poplin"
     },
     "grade": "B",
-    "category": "shirting",
+    "category": "mens-fabrics",
     "composition": "cotton",
     "construction": {
       "ar": "سُداة بسيطة",
@@ -1754,7 +1754,7 @@
       "en": "Cotton Poplin"
     },
     "grade": "C",
-    "category": "shirting",
+    "category": "mens-fabrics",
     "composition": "cotton",
     "construction": {
       "ar": "سُداة بسيطة",
@@ -1824,7 +1824,7 @@
       "en": "Twill Shirting"
     },
     "grade": "A",
-    "category": "shirting",
+    "category": "mens-fabrics",
     "composition": "poly",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -1889,7 +1889,7 @@
       "en": "Twill Shirting"
     },
     "grade": "B",
-    "category": "shirting",
+    "category": "mens-fabrics",
     "composition": "poly",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -1959,7 +1959,7 @@
       "en": "Twill Shirting"
     },
     "grade": "C",
-    "category": "shirting",
+    "category": "mens-fabrics",
     "composition": "poly",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -2029,7 +2029,7 @@
       "en": "Cotton Lycra Jersey"
     },
     "grade": "A",
-    "category": "jersey-knit",
+    "category": "mens-fabrics",
     "composition": "cotton lycra jersey",
     "construction": {
       "ar": "حياكة سَدى · 4 خيوط",
@@ -2094,7 +2094,7 @@
       "en": "Cotton Lycra Jersey"
     },
     "grade": "B",
-    "category": "jersey-knit",
+    "category": "mens-fabrics",
     "composition": "cotton lycra jersey",
     "construction": {
       "ar": "حياكة سَدى · 4 خيوط",
@@ -2159,7 +2159,7 @@
       "en": "Cotton Lycra Jersey"
     },
     "grade": "C",
-    "category": "jersey-knit",
+    "category": "mens-fabrics",
     "composition": "cotton lycra jersey",
     "construction": {
       "ar": "حياكة سَدى · 4 خيوط",
@@ -2224,7 +2224,7 @@
       "en": "Scuba Knit"
     },
     "grade": "A",
-    "category": "jersey-knit",
+    "category": "mens-fabrics",
     "composition": "scuba",
     "construction": {
       "ar": "حياكة مزدوج · سكبا",
@@ -2289,7 +2289,7 @@
       "en": "Scuba Knit"
     },
     "grade": "B",
-    "category": "jersey-knit",
+    "category": "mens-fabrics",
     "composition": "scuba",
     "construction": {
       "ar": "حياكة مزدوج · سكبا",
@@ -2354,7 +2354,7 @@
       "en": "Scuba Knit"
     },
     "grade": "C",
-    "category": "jersey-knit",
+    "category": "mens-fabrics",
     "composition": "scuba",
     "construction": {
       "ar": "حياكة مزدوج · سكبا",
@@ -2424,7 +2424,7 @@
       "en": "French Lace"
     },
     "grade": "A",
-    "category": "lace-tulle",
+    "category": "womens-fabrics",
     "composition": "raschel lace",
     "construction": {
       "ar": "دانتيل رايشل · شِبَك أرضي",
@@ -2494,7 +2494,7 @@
       "en": "French Lace"
     },
     "grade": "B",
-    "category": "lace-tulle",
+    "category": "womens-fabrics",
     "composition": "raschel lace",
     "construction": {
       "ar": "دانتيل رايشل · شِبَك أرضي",
@@ -2559,7 +2559,7 @@
       "en": "French Lace"
     },
     "grade": "C",
-    "category": "lace-tulle",
+    "category": "womens-fabrics",
     "composition": "raschel lace",
     "construction": {
       "ar": "دانتيل رايشل · شِبَك أرضي",
@@ -2624,7 +2624,7 @@
       "en": "Tulle Net"
     },
     "grade": "A",
-    "category": "lace-tulle",
+    "category": "womens-fabrics",
     "composition": "tulle",
     "construction": {
       "ar": "شبكة رايشل",
@@ -2694,7 +2694,7 @@
       "en": "Tulle Net"
     },
     "grade": "B",
-    "category": "lace-tulle",
+    "category": "womens-fabrics",
     "composition": "tulle",
     "construction": {
       "ar": "شبكة رايشل",
@@ -2764,7 +2764,7 @@
       "en": "Tulle Net"
     },
     "grade": "C",
-    "category": "lace-tulle",
+    "category": "womens-fabrics",
     "composition": "tulle",
     "construction": {
       "ar": "شبكة رايشل",
@@ -2829,7 +2829,7 @@
       "en": "Linen Blend"
     },
     "grade": "A",
-    "category": "home-textiles",
+    "category": "mens-fabrics",
     "composition": "linen blend",
     "construction": {
       "ar": "سُداة بسيطة · سلب",
@@ -2894,7 +2894,7 @@
       "en": "Linen Blend"
     },
     "grade": "B",
-    "category": "home-textiles",
+    "category": "mens-fabrics",
     "composition": "linen blend",
     "construction": {
       "ar": "سُداة بسيطة · سلب",
@@ -2959,7 +2959,7 @@
       "en": "Linen Blend"
     },
     "grade": "C",
-    "category": "home-textiles",
+    "category": "mens-fabrics",
     "composition": "linen blend",
     "construction": {
       "ar": "سُداة بسيطة · سلب",
@@ -3029,7 +3029,7 @@
       "en": "Curtain Crepe"
     },
     "grade": "A",
-    "category": "home-textiles",
+    "category": "mens-fabrics",
     "composition": "poly crepe",
     "construction": {
       "ar": "سُداة بسيطة · معاملة كريب",
@@ -3094,7 +3094,7 @@
       "en": "Curtain Crepe"
     },
     "grade": "B",
-    "category": "home-textiles",
+    "category": "mens-fabrics",
     "composition": "poly crepe",
     "construction": {
       "ar": "سُداة بسيطة · معاملة كريب",
@@ -3159,7 +3159,7 @@
       "en": "Curtain Crepe"
     },
     "grade": "C",
-    "category": "home-textiles",
+    "category": "mens-fabrics",
     "composition": "poly crepe",
     "construction": {
       "ar": "سُداة بسيطة · معاملة كريب",
@@ -3229,7 +3229,7 @@
       "en": "Twill Lining"
     },
     "grade": "A",
-    "category": "linings",
+    "category": "mens-fabrics",
     "composition": "viscose",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -3294,7 +3294,7 @@
       "en": "Twill Lining"
     },
     "grade": "B",
-    "category": "linings",
+    "category": "mens-fabrics",
     "composition": "viscose",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -3359,7 +3359,7 @@
       "en": "Twill Lining"
     },
     "grade": "C",
-    "category": "linings",
+    "category": "mens-fabrics",
     "composition": "viscose",
     "construction": {
       "ar": "سُداة بسيطة/مُشْطَبة",
@@ -3424,7 +3424,7 @@
       "en": "Satin Lining"
     },
     "grade": "A",
-    "category": "linings",
+    "category": "mens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -3494,7 +3494,7 @@
       "en": "Satin Lining"
     },
     "grade": "B",
-    "category": "linings",
+    "category": "mens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -3564,7 +3564,7 @@
       "en": "Satin Lining"
     },
     "grade": "C",
-    "category": "linings",
+    "category": "mens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -3634,7 +3634,7 @@
       "en": "Surplus Chiffon"
     },
     "grade": "A",
-    "category": "surplus",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -3704,7 +3704,7 @@
       "en": "Surplus Chiffon"
     },
     "grade": "B",
-    "category": "surplus",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -3774,7 +3774,7 @@
       "en": "Surplus Chiffon"
     },
     "grade": "C",
-    "category": "surplus",
+    "category": "womens-fabrics",
     "composition": "chiffon",
     "construction": {
       "ar": "سُداة بسيطة · خفيف",
@@ -3844,7 +3844,7 @@
       "en": "Clearance Satin"
     },
     "grade": "A",
-    "category": "surplus",
+    "category": "mens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -3914,7 +3914,7 @@
       "en": "Clearance Satin"
     },
     "grade": "B",
-    "category": "surplus",
+    "category": "mens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
@@ -3984,7 +3984,7 @@
       "en": "Clearance Satin"
     },
     "grade": "C",
-    "category": "surplus",
+    "category": "mens-fabrics",
     "composition": "satin",
     "construction": {
       "ar": "سَتْن 4-نهايات",
