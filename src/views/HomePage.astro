@@ -38,14 +38,15 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
   description={t(locale, 'home.heroSubtitle')}
   path=""
 >
-  <!-- 1. Hero — logo-led, 100svh, responsive desktop/mobile -->
+  <!-- 1. Hero — TJX-style bold, blue + red, value-driven -->
   <section class="azt-hero" style="position: relative; height: 100svh; min-height: 560px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-    <!-- Branded gradient backdrop (replaces the full-bleed photo) -->
-    <div style="position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 18%, var(--color-ink-700) 0%, var(--color-ink-900) 55%, #050403 100%);"></div>
-    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgb(12 11 9 / 0.2) 0%, rgb(12 11 9 / 0.65) 100%);"></div>
-    <!-- Decorative gold weave rings behind the logo -->
+    <!-- Bold blue backdrop with red radial accent -->
+    <div style="position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 18%, var(--color-indigo) 0%, var(--color-indigo-dark) 55%, #0a1530 100%);"></div>
+    <div style="position: absolute; inset: 0; background: radial-gradient(60% 50% at 85% 80%, rgb(200 16 46 / 28%) 0%, transparent 70%);"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgb(15 22 35 / 0.2) 0%, rgb(10 21 48 / 0.6) 100%);"></div>
+    <!-- Decorative weave rings behind the logo in red -->
     <div aria-hidden="true" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
-      <svg width="min(78vmin, 720px)" height="min(78vmin, 720px)" viewBox="0 0 720 720" fill="none" style="opacity: 0.12;">
+      <svg width="min(78vmin, 720px)" height="min(78vmin, 720px)" viewBox="0 0 720 720" fill="none" style="opacity: 0.16;">
         <circle cx="360" cy="360" r="330" stroke="var(--color-giza)" stroke-width="1" />
         <circle cx="360" cy="360" r="250" stroke="var(--color-giza)" stroke-width="1" />
         <circle cx="360" cy="360" r="170" stroke="var(--color-giza)" stroke-width="1" />
@@ -53,14 +54,14 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
     </div>
     <div class="azt-container" style="position: relative; color: var(--color-sand-50); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; padding-block: clamp(96px, 14vh, 160px);">
       <Logo size={96} wordmark={false} tone="light" />
-      <p class="azt-mono" style="font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-giza); margin: 0;">
+      <p class="azt-mono" style="font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-giza); margin: 0; font-weight: 600;">
         {t(locale, 'home.heroKicker')} · {t(locale, 'home.heroSpec')}
       </p>
       <h1 style="max-width: 18ch; margin: 0;">{t(locale, 'home.heroTitle')}</h1>
-      <p style="max-width: 52ch; color: rgba(247, 243, 236, 0.92); margin: 0;">{t(locale, 'home.heroSubtitle')}</p>
+      <p style="max-width: 52ch; color: rgba(255, 255, 255, 0.92); margin: 0;">{t(locale, 'home.heroSubtitle')}</p>
       <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
         <a class="azt-btn" href={locUrl(locale, 'gallery')}>{t(locale, 'home.ctaVisit')}</a>
-        <a class="azt-btn azt-btn-ghost" style="color: var(--color-sand-50); border-color: var(--color-sand-50);" href={waLink(waText)} target="_blank" rel="noopener">{t(locale, 'home.ctaWhatsApp')}</a>
+        <a class="azt-btn azt-btn-blue" href={waLink(waText)} target="_blank" rel="noopener">{t(locale, 'home.ctaWhatsApp')}</a>
       </div>
     </div>
   </section>
@@ -146,22 +147,22 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
   </section>
 
   <!-- 6. Provenance teaser -->
-  <section class="azt-cv" style="background: var(--color-ink-900); color: var(--color-sand-50); padding-block: clamp(48px, 8vw, 96px);">
+  <section class="azt-cv" style="background: var(--color-indigo-dark); color: var(--color-sand-50); padding-block: clamp(48px, 8vw, 96px);">
     <div class="azt-container">
       <div class="azt-grid azt-split-2" style="grid-template-columns: 1.2fr 1fr; align-items: center; gap: 48px;">
         <div>
-          <p class="azt-mono" style="color: var(--color-giza); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px;">Provenance Sheet</p>
+          <p class="azt-mono" style="color: var(--color-giza); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px; font-weight: 600;">Provenance Sheet</p>
           <h2 style="color: var(--color-sand-50); margin-top: 0;">{t(locale, 'home.provenanceTitle')}</h2>
-          <p style="color: rgba(247, 243, 236, 0.85);">{t(locale, 'home.provenanceBody')}</p>
-          <a class="azt-btn azt-btn-giza" href={locUrl(locale, 'provenance')} style="margin-block-start: 20px;">{t(locale, 'home.provenanceCta')}</a>
+          <p style="color: rgba(255, 255, 255, 0.85);">{t(locale, 'home.provenanceBody')}</p>
+          <a class="azt-btn" href={locUrl(locale, 'provenance')} style="margin-block-start: 20px;">{t(locale, 'home.provenanceCta')}</a>
         </div>
-        <div class="azt-card" style="padding: 20px; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.8; background: rgb(247 243 236 / 6%); border-color: rgb(247 243 236 / 15%);">
-          <div style="color: var(--color-giza);">LT-01-A</div>
+        <div class="azt-card" style="padding: 20px; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.8; background: rgb(255 255 255 / 6%); border-color: rgb(255 255 255 / 15%);">
+          <div style="color: var(--color-giza); font-weight: 600;">LT-01-A</div>
           <div>→ received 2026-10-04</div>
           <div>→ graded A · 12 bolts</div>
           <div>→ priced 225.00 EGP/m</div>
           <div>→ listed · 904 m in stock</div>
-          <div style="margin-block-start: 8px; color: rgba(247,243,236,0.6);">sha256: 9f2a…c41e</div>
+          <div style="margin-block-start: 8px; color: rgba(255,255,255,0.6);">sha256: 9f2a…c41e</div>
         </div>
       </div>
     </div>
