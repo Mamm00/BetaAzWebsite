@@ -9,8 +9,6 @@ import { COMPANY } from '../data/company';
 import { t } from '../lib/i18n';
 import { locUrl, type Locale } from '../lib/url';
 import { gallery, journal, categories, grades, fabrics, priceLabel } from '../lib/content';
-import { media } from '../assets/media';
-import { Image } from 'astro:assets';
 import { waLink } from '../lib/wa';
 import { waTemplate } from '../lib/wa';
 import { fabricArt } from '../lib/fabricArt';
@@ -18,15 +16,13 @@ import GradeChip from '../components/GradeChip.astro';
 import GalleryCard from '../components/GalleryCard.astro';
 import DirectionsLink from '../components/DirectionsLink.astro';
 import PhoneRow from '../components/PhoneRow.astro';
+import Logo from '../components/Logo.astro';
 
 export interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-
-const heroImage = gallery.find((g) => g.id === 'floor-1')!;
-const heroUrl = media(heroImage.src);
 
 const mosaicCats = [
   categories.find((c) => c.slug === 'womens-apparel')!,
@@ -45,29 +41,27 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
   description={t(locale, 'home.heroSubtitle')}
   path=""
 >
-  <!-- 1. Hero — full-bleed macro, 100svh -->
-  <section class="azt-hero" style="position: relative; height: 100svh; min-height: 560px; overflow: hidden; display: flex; align-items: flex-end;">
-    {heroUrl && (
-      <Image
-        src={heroUrl}
-        alt={locale === 'ar' ? heroImage.alt.ar : heroImage.alt.en}
-        width={1920}
-        height={1080}
-        widths={[800, 1280, 1600, 1920]}
-        sizes="100vw"
-        fetchpriority="high"
-        decoding="async"
-        style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"
-      />
-    )}
-    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgb(12 11 9 / 0.15) 0%, rgb(12 11 9 / 0.55) 100%);"></div>
-    <div class="azt-container" style="position: relative; color: var(--color-sand-50); padding-block-end: clamp(40px, 8vh, 96px); padding-block-start: 96px;">
-      <p class="azt-mono" style="font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-giza); margin: 0 0 16px;">
+  <!-- 1. Hero — logo-led, 100svh, responsive desktop/mobile -->
+  <section class="azt-hero" style="position: relative; height: 100svh; min-height: 560px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+    <!-- Branded gradient backdrop (replaces the full-bleed photo) -->
+    <div style="position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 18%, var(--color-ink-700) 0%, var(--color-ink-900) 55%, #050403 100%);"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgb(12 11 9 / 0.2) 0%, rgb(12 11 9 / 0.65) 100%);"></div>
+    <!-- Decorative gold weave rings behind the logo -->
+    <div aria-hidden="true" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+      <svg width="min(78vmin, 720px)" height="min(78vmin, 720px)" viewBox="0 0 720 720" fill="none" style="opacity: 0.12;">
+        <circle cx="360" cy="360" r="330" stroke="var(--color-giza)" stroke-width="1" />
+        <circle cx="360" cy="360" r="250" stroke="var(--color-giza)" stroke-width="1" />
+        <circle cx="360" cy="360" r="170" stroke="var(--color-giza)" stroke-width="1" />
+      </svg>
+    </div>
+    <div class="azt-container" style="position: relative; color: var(--color-sand-50); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; padding-block: clamp(96px, 14vh, 160px);">
+      <Logo size={96} wordmark={false} tone="light" />
+      <p class="azt-mono" style="font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-giza); margin: 0;">
         {t(locale, 'home.heroKicker')} · {t(locale, 'home.heroSpec')}
       </p>
-      <h1 style="max-width: 18ch;">{t(locale, 'home.heroTitle')}</h1>
-      <p style="max-width: 52ch; color: rgba(247, 243, 236, 0.92); margin-block-end: 32px;">{t(locale, 'home.heroSubtitle')}</p>
-      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <h1 style="max-width: 18ch; margin: 0;">{t(locale, 'home.heroTitle')}</h1>
+      <p style="max-width: 52ch; color: rgba(247, 243, 236, 0.92); margin: 0;">{t(locale, 'home.heroSubtitle')}</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
         <a class="azt-btn" href={locUrl(locale, 'gallery')}>{t(locale, 'home.ctaVisit')}</a>
         <a class="azt-btn azt-btn-ghost" style="color: var(--color-sand-50); border-color: var(--color-sand-50);" href={waLink(waText)} target="_blank" rel="noopener">{t(locale, 'home.ctaWhatsApp')}</a>
       </div>
@@ -77,7 +71,7 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
   <!-- 2. Gallery band -->
   <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
     <div class="azt-container">
-      <div class="azt-grid" style="grid-template-columns: 1.4fr 1fr; align-items: center;">
+      <div class="azt-grid azt-split-2" style="grid-template-columns: 1.4fr 1fr; align-items: center;">
         <div>
           <h2>{t(locale, 'home.galleryBandTitle')}</h2>
           <p style="color: var(--color-ink-700);">{t(locale, 'home.galleryBandBody')}</p>
@@ -101,7 +95,7 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
         </div>
         <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'grades')}>{t(locale, 'home.gradesCta')}</a>
       </div>
-      <div class="azt-grid" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <div class="azt-grid azt-split-3" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
         {grades.map((g) => (
           <a class="azt-card" href={locUrl(locale, 'grades')} style="padding: 24px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit;">
             <GradeChip grade={g} locale={locale} />
@@ -119,7 +113,7 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
     <div class="azt-container">
       <h2>{t(locale, 'home.categoriesTitle')}</h2>
       <p style="color: var(--color-ink-700); margin-top: 8px;">{t(locale, 'home.categoriesBody')}</p>
-      <div class="azt-grid" style="grid-template-columns: repeat(4, 1fr); grid-template-rows: 260px 260px; gap: 16px; margin-block-start: 32px;">
+      <div class="azt-grid azt-split-4" style="grid-template-columns: repeat(4, 1fr); grid-template-rows: 260px 260px; gap: 16px; margin-block-start: 32px;">
         {mosaicCats.map((c, i) => (
           <a
             class="azt-card"
@@ -141,7 +135,7 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
   <!-- 5. Twin Studio teaser -->
   <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
     <div class="azt-container">
-      <div class="azt-grid" style="grid-template-columns: 1fr 1.2fr; align-items: center; gap: 48px;">
+      <div class="azt-grid azt-split-2" style="grid-template-columns: 1fr 1.2fr; align-items: center; gap: 48px;">
         <div>
           <h2 style="margin-top: 0;">{t(locale, 'home.twinTitle')}</h2>
           <p style="color: var(--color-ink-700);">{t(locale, 'home.twinBody')}</p>
@@ -157,7 +151,7 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
   <!-- 6. Provenance teaser -->
   <section class="azt-cv" style="background: var(--color-ink-900); color: var(--color-sand-50); padding-block: clamp(48px, 8vw, 96px);">
     <div class="azt-container">
-      <div class="azt-grid" style="grid-template-columns: 1.2fr 1fr; align-items: center; gap: 48px;">
+      <div class="azt-grid azt-split-2" style="grid-template-columns: 1.2fr 1fr; align-items: center; gap: 48px;">
         <div>
           <p class="azt-mono" style="color: var(--color-giza); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px;">Provenance Sheet</p>
           <h2 style="color: var(--color-sand-50); margin-top: 0;">{t(locale, 'home.provenanceTitle')}</h2>
@@ -195,7 +189,7 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
         </div>
         <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'journal')}>{t(locale, 'home.journalCta')}</a>
       </div>
-      <div class="azt-grid" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <div class="azt-grid azt-split-3" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
         {journal.map((a) => (
           <a class="azt-card" href={locUrl(locale, `journal/${a.slug}`)} style="padding: 0; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
             <div set:html={fabricArt({ seed: 31 + a.slug.length * 13, shade: '#8C3B2E', grade: 'A', construction: 'plain', w: 800, h: 450 })} style="aspect-ratio: 16 / 9;" />
@@ -213,7 +207,7 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
   <!-- 9. Contact band -->
   <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
     <div class="azt-container">
-      <div class="azt-grid" style="grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start;">
+      <div class="azt-grid azt-split-2" style="grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start;">
         <div>
           <h2 style="margin-top: 0;">{t(locale, 'home.contactTitle')}</h2>
           <p style="color: var(--color-ink-700);">{t(locale, 'home.contactBody')}</p>
