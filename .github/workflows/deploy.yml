@@ -44,6 +44,9 @@ jobs:
       - name: Build (AZT_BASE=/BetaAzWebsite/)
         run: AZT_BASE=/BetaAzWebsite/ npm run build
 
+      - name: Strip CNAME (root-domain only, keeps Pages on github.io)
+        run: rm -f dist/CNAME
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
