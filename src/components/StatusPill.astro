@@ -1,0 +1,30 @@
+---
+/**
+ * StatusPill — availability / publish status.
+ */
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+
+export interface Props {
+  status: 'in-stock' | 'low-stock' | 'out-of-stock' | 'draft' | 'published' | 'archived';
+  locale: Locale;
+}
+
+const { status, locale } = Astro.props;
+const map = {
+  'in-stock': 'status.inStock',
+  'low-stock': 'status.lowStock',
+  'out-of-stock': 'status.outOfStock',
+  draft: 'status.draft',
+  published: 'status.published',
+  archived: 'status.archived',
+};
+const cls =
+  status === 'in-stock' || status === 'published' ? 'azt-grade-a' :
+  status === 'low-stock' || status === 'draft' ? 'azt-grade-b' : 'azt-grade-c';
+---
+
+<span class={`azt-chip ${cls}`} style="font-size: 0.72rem;">
+  <span class="azt-dot" style="width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: inline-block;"></span>
+  {t(locale, map[status])}
+</span>

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "A",
+    "grade": "A",
+    "name": {
+      "ar": "الدرجة A",
+      "en": "Grade A"
+    },
+    "tag": {
+      "ar": "أ · أول",
+      "en": "A · FIRST"
+    },
+    "description": {
+      "ar": "أول جودة. درجة export، صبغة متوحدة، العرض كامل، ما في عيوب ظاهرة.",
+      "en": "First quality. Export-grade, consistent dye lot, full width, no visible defects."
+    },
+    "priceImplication": {
+      "ar": "السعر: الفئة العليا",
+      "en": "Price: premium band"
+    },
+    "typicalBuyer": {
+      "ar": "اللي بيطلبوا export وال Production الراقية",
+      "en": "Export buyers and premium production"
+    },
+    "bullets": {
+      "ar": [
+        "صبغة متوحدة من أول متر لآخر",
+        "العرض كامل والحواف سليمة",
+        "تحت ضوء المعرض: مافي عيوب ظاهرة",
+        "مناسب لل export والقطع الراقية"
+      ],
+      "en": [
+        "Consistent dye lot from first to last metre",
+        "Full width, sound edges",
+        "Under gallery light: no visible defects",
+        "Suited to export and premium pieces"
+      ]
+    },
+    "accent": "ok"
+  },
+  {
+    "id": "B",
+    "grade": "B",
+    "name": {
+      "ar": "الدرجة B",
+      "en": "Grade B"
+    },
+    "tag": {
+      "ar": "ب · ثاني",
+      "en": "B · SECOND"
+    },
+    "description": {
+      "ar": "اختلاف خفيف في السداة أو الصبغة، اليد سليمة، والأمتار المستخدمة كاملة.",
+      "en": "Minor weaving or dye variation, sound hand, full usable metres."
+    },
+    "priceImplication": {
+      "ar": "السعر: الفئة الوسطى",
+      "en": "Price: mid band"
+    },
+    "typicalBuyer": {
+      "ar": "السوق المحلي والإنتاج السعري",
+      "en": "Domestic market and price-driven production"
+    },
+    "bullets": {
+      "ar": [
+        "اختلاف خفيف في الصبغة أو السداة",
+        "اليد سليمة والقماش بيتحمل الخياطة",
+        "الأمتار المستخدمة كاملة",
+        "سعر مريح للسوق المحلي"
+      ],
+      "en": [
+        "Minor dye or weaving variation",
+        "Sound hand, holds up in sewing",
+        "Full usable metres",
+        "Comfortable price for the domestic market"
+      ]
+    },
+    "accent": "indigo"
+  },
+  {
+    "id": "C",
+    "grade": "C",
+    "name": {
+      "ar": "الدرجة C",
+      "en": "Grade C"
+    },
+    "tag": {
+      "ar": "ج · تصفية",
+      "en": "C · VALUE"
+    },
+    "description": {
+      "ar": "عيوب ظاهرة، أطوال قصيرة، أو مخزون زائد للتصفية. تتباع بالبالة والكمية.",
+      "en": "Visible defects, short lengths or overstock clearance. Sold in bulk and by the lot."
+    },
+    "priceImplication": {
+      "ar": "السعر: فئة القيمة",
+      "en": "Price: value band"
+    },
+    "typicalBuyer": {
+      "ar": "الكميات والتصفية والاستخدام الرخيص",
+      "en": "Bulk, clearance and budget use"
+    },
+    "bullets": {
+      "ar": [
+        "عيوب ظاهرة: نُتوء أو بُقع أو خيوط مقطوعة",
+        "أطوال قصيرة أو مخزون زائد",
+        "بتتباع بالبالة والكمية الكبيرة",
+        "السعر في فئة القيمة — للمشروعات السعرية"
+      ],
+      "en": [
+        "Visible defects: slubs, spots or broken threads",
+        "Short lengths or overstock",
+        "Sold in bulk and by the lot",
+        "Value price band — for price-led projects"
+      ]
+    },
+    "accent": "madder"
+  }
+]

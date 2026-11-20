@@ -1,0 +1,32 @@
+---
+/**
+ * GradeChip — mandatory grade facet chip on every card (§4).
+ * Accent-only colouring: --ok A, --indigo B, --madder C.
+ * Accepts either a Grade object (has .grade/.tag) or a bare grade string
+ * (Fabric.grade) — callers pass both shapes.
+ */
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import type { Grade } from '../lib/schema';
+
+export interface Props {
+  grade: Grade | 'A' | 'B' | 'C';
+  locale: Locale;
+  size?: 'sm' | 'md';
+}
+
+const { grade, locale, size = 'md' } = Astro.props;
+const letter = typeof grade === 'string' ? grade : grade.grade;
+const cls = letter === 'A' ? 'azt-grade-a' : letter === 'B' ? 'azt-grade-b' : 'azt-grade-c';
+const bgCls = letter === 'A' ? 'azt-grade-a-bg' : letter === 'B' ? 'azt-grade-b-bg' : 'azt-grade-c-bg';
+const g = { ar: letter === 'A' ? 'أ' : letter === 'B' ? 'ب' : 'ج', en: letter };
+const tagText =
+  typeof grade === 'object' && grade !== null && 'tag' in grade
+    ? (locale === 'ar' ? grade.tag.ar : grade.tag.en)
+    : '';
+---
+
+<span class={`azt-chip ${cls} ${bgCls}`} style={size === 'sm' ? 'font-size: 0.72rem; padding: 2px 8px;' : ''}>
+  <span class="azt-mono" style="font-weight: 600;">{locale === 'ar' ? g.ar : g.en}</span>
+  {tagText && <span>{tagText}</span>}
+</span>

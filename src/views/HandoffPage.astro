@@ -1,0 +1,32 @@
+---
+/**
+ * HandoffPage (§8) — target picker, payload, manifest export.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import HandoffApp from '../components/HandoffApp.tsx';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'handoff.title')} · ${t(locale, 'nav.fabrics')}`}
+  description={t(locale, 'handoff.subtitle')}
+  path="handoff"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'handoff.title') }]} />
+    <h1 style="margin: 0;">{t(locale, 'handoff.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'handoff.subtitle')}</p>
+    <div style="margin-block-start: 32px;">
+      <HandoffApp locale={locale} client:load />
+    </div>
+  </div>
+</BaseLayout>

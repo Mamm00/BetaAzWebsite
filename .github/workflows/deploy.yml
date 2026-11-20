@@ -1,0 +1,61 @@
+name: Deploy — dual host
+
+# Dual deploy from one build (§28): GitHub Pages subpath AND root domain.
+# The root-domain build (AZT_BASE=/) goes to Vercel via the connector;
+# the subpath build (AZT_BASE=/al-azhar-tex/) deploys to gh-pages here.
+
+on:
+  push:
+    branches: [main, arena/**]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sync Astro types
+        run: npx astro sync
+
+      - name: Validate content
+        run: npm run validate
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build (AZT_BASE=/al-azhar-tex/)
+        run: AZT_BASE=/al-azhar-tex/ npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

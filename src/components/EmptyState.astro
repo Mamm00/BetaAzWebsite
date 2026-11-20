@@ -1,0 +1,31 @@
+---
+/**
+ * EmptyState — always renders with a working reset (§6.4).
+ */
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+
+export interface Props {
+  locale: Locale;
+  titleKey: string;
+  bodyKey: string;
+  resetHref?: string;
+  resetLabelKey?: string;
+}
+
+const { locale, titleKey, bodyKey, resetHref, resetLabelKey = 'common.reset' } = Astro.props;
+---
+
+<div class="azt-card azt-empty" style="padding: 48px 32px; text-align: center; display: grid; gap: 12px; justify-items: center;">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--color-ink-500)" stroke-width="1.4" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M8.5 12h7M12 8v8" />
+  </svg>
+  <h2 style="margin: 0; font-size: 1.1rem;">{t(locale, titleKey)}</h2>
+  <p style="margin: 0; color: var(--color-ink-700); max-width: 48ch;">{t(locale, bodyKey)}</p>
+  {resetHref && (
+    <a class="azt-btn azt-btn-ghost" href={locUrl(locale, resetHref)} style="margin-block-start: 8px;">
+      {t(locale, resetLabelKey === 'common.reset' ? 'catalog.viewAllReset' : resetLabelKey)}
+    </a>
+  )}
+</div>

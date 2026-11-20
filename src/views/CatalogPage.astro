@@ -1,0 +1,57 @@
+---
+/**
+ * CatalogPage (§10) — the fabric grid. Filtering/sorting/pagination
+ * enhanced by the CatalogExplorer island (milestone 6); the server-rendered
+ * grid is the no-JS baseline.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FabricCard from '../components/FabricCard.astro';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { fabrics, categories, priceLabel } from '../lib/content';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+  categorySlug?: string;
+}
+
+const { locale, categorySlug } = Astro.props;
+const titleKey = categorySlug ? 'catalog.title' : 'catalog.title';
+const list = categorySlug ? fabrics.filter((f) => f.category === categorySlug) : fabrics;
+const cat = categorySlug ? categories.find((c) => c.slug === categorySlug) : undefined;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, titleKey)} · ${t(locale, 'nav.fabrics')}`}
+  description={t(locale, 'catalog.subtitle')}
+  path={categorySlug ? `categories/${categorySlug}` : 'fabrics'}
+>
+  <div class="azt-container" style="padding-block: 40px 72px;">
+    <Breadcrumb
+      locale={locale}
+      crumbs={[
+        { label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' },
+        { label: t(locale, 'nav.fabrics'), href: 'fabrics' },
+        ...(categorySlug ? [{ label: locale === 'ar' ? cat?.name.ar ?? categorySlug : cat?.name.en ?? categorySlug }] : []),
+      ]}
+    />
+
+    <header style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-block-end: 32px;">
+      <div>
+        <h1 style="margin: 0;">{categorySlug ? (locale === 'ar' ? cat?.name.ar : cat?.name.en) : t(locale, 'catalog.title')}</h1>
+        {categorySlug && <p style="color: var(--color-ink-700); margin: 8px 0 0; max-width: 60ch;">{locale === 'ar' ? cat?.description.ar : cat?.description.en}</p>}
+      </div>
+      <p class="azt-mono" style="margin: 0; color: var(--color-ink-500);">
+        {list.length} {list.length === 1 ? t(locale, 'common.results_one') : t(locale, 'common.results_other')}
+      </p>
+    </header>
+
+    <div class="azt-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;" data-fabric-grid>
+      {list.map((f) => (
+        <FabricCard fabric={f} locale={locale} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

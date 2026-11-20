@@ -1,0 +1,46 @@
+---
+/**
+ * LegalPage — privacy / terms.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+  kind: 'privacy' | 'terms';
+}
+
+const { locale, kind } = Astro.props;
+const titleKey = kind === 'privacy' ? 'legal.privacy.title' : 'legal.terms.title';
+const bodyKey = kind === 'privacy' ? 'legal.privacy.body' : 'legal.terms.body';
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, titleKey)} · ${t(locale, 'footer.rights')}`}
+  description={t(locale, bodyKey)}
+  path={`legal/${kind}`}
+>
+  <div class="azt-container" style="padding-block: 40px 96px; max-width: 760px;">
+    <Breadcrumb
+      locale={locale}
+      crumbs={[
+        { label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' },
+        { label: t(locale, titleKey) },
+      ]}
+    />
+    <h1 style="margin: 0;">{t(locale, titleKey)}</h1>
+    <div style={{ marginBlockStart: 24, display: 'grid', gap: 16 }}>
+      {t(locale, bodyKey).split('\n\n').map((para) => (
+        <p style={{ margin: 0, color: 'var(--color-ink-700)' }}>{para}</p>
+      ))}
+    </div>
+    <p style={{ marginBlockStart: 40, fontSize: '0.85rem', color: 'var(--color-ink-500)' }}>
+      <a href={locUrl(locale, kind === 'privacy' ? 'legal/terms' : 'legal/privacy')} style="color: var(--color-indigo)">
+        {kind === 'privacy' ? t(locale, 'legal.terms.title') : t(locale, 'legal.privacy.title')}
+      </a>
+    </p>
+  </div>
+</BaseLayout>

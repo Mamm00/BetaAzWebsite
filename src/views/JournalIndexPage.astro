@@ -1,0 +1,42 @@
+---
+/**
+ * JournalIndexPage — article cards.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fabricArt } from '../lib/fabricArt';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { journal } from '../lib/content';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'journal.title')} · ${t(locale, 'nav.journal')}`}
+  description={t(locale, 'journal.subtitle')}
+  path="journal"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.journal') }]} />
+    <h1 style="margin: 0;">{t(locale, 'journal.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'journal.subtitle')}</p>
+    <div class="azt-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-block-start: 40px;">
+      {journal.map((a, i) => (
+        <a class="azt-card" href={locUrl(locale, `journal/${a.slug}`)} style="padding: 0; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+          <div set:html={fabricArt({ seed: 100 + i * 77, shade: ['#1E3050', '#8C3B2E', '#3F6B4A'][i % 3]!, grade: 'A', construction: 'plain', w: 800, h: 450 })} style="aspect-ratio: 16 / 9;" />
+          <div style="padding: 22px; display: flex; flex-direction: column; gap: 10px; flex: 1;">
+            <h2 style="margin: 0; font-size: 1.15rem;">{locale === 'ar' ? a.title.ar : a.title.en}</h2>
+            <p style="margin: 0; color: var(--color-ink-700); font-size: 0.9rem; flex: 1;">{locale === 'ar' ? a.excerpt.ar : a.excerpt.en}</p>
+            <span class="azt-mono" style="font-size: 0.75rem; color: var(--color-ink-500);">{a.date} · {t(locale, 'journal.minRead', { min: a.minRead })}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

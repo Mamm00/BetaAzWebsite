@@ -1,0 +1,32 @@
+---
+/**
+ * WashLabPage (§8) — denim wash simulator with three.js shader island.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import WashSimulator from '../components/WashSimulator.tsx';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'wash.title')} · ${t(locale, 'nav.fabrics')}`}
+  description={t(locale, 'wash.subtitle')}
+  path="wash-lab"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'wash.title') }]} />
+    <h1 style="margin: 0;">{t(locale, 'wash.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'wash.subtitle')}</p>
+    <div style="margin-block-start: 32px;">
+      <WashSimulator locale={locale} client:only="react" />
+    </div>
+  </div>
+</BaseLayout>

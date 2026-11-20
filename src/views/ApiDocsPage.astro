@@ -1,0 +1,99 @@
+---
+/**
+ * ApiDocsPage (§8) — mock REST documentation for /{locale}/api/* endpoints.
+ * Documentation surface: values read from the static content files.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { fabrics, categories, grades, company } from '../lib/content';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const origin = Astro.site?.toString().replace(/\/+$/, '') ?? 'https://alazhartex.com';
+
+const endpoints = [
+  {
+    method: 'GET',
+    endpoint: '/api/fabrics',
+    desc: locale === 'ar' ? 'كل الأقمشة مع الدرجة والتركيبة والسعر.' : 'All fabrics with grade, composition and price.',
+    example: `{
+  "count": ${fabrics.length},
+  "results": [
+    {
+      "code": "${fabrics[0]?.code}",
+      "slug": "${fabrics[0]?.slug}",
+      "grade": "${fabrics[0]?.grade}",
+      "pricePerMetre": ${fabrics[0]?.pricePerMetre}
+    }
+  ]
+}`,
+  },
+  {
+    method: 'GET',
+    endpoint: '/api/fabrics/{slug}',
+    desc: locale === 'ar' ? 'قماش واحد بكل المواصفات وملاحظات الدرجة.' : 'A single fabric with full specs and grade notes.',
+    example: `{
+  "slug": "crepe-georgette-a",
+  "name": { "ar": "كريب جورجيت", "en": "Crepe Georgette" },
+  "gradeNotes": ["…"]
+}`,
+  },
+  {
+    method: 'GET',
+    endpoint: '/api/grades',
+    desc: locale === 'ar' ? 'تعريف الدرجات A وB وC.' : 'Grade definitions for A, B and C.',
+    example: JSON.stringify(
+      grades.map((g) => ({ grade: g.grade, tag: locale === 'ar' ? g.tag.ar : g.tag.en })),
+      null,
+      2,
+    ),
+  },
+  {
+    method: 'GET',
+    endpoint: '/api/categories',
+    desc: locale === 'ar' ? 'الفئات مع عدد الأقمشة في كل فئة.' : 'Categories with fabric counts.',
+    example: JSON.stringify(
+      categories.map((c) => ({ slug: c.slug, count: fabrics.filter((f) => f.category === c.slug).length })),
+      null,
+      2,
+    ),
+  },
+  {
+    method: 'GET',
+    endpoint: '/api/company',
+    desc: locale === 'ar' ? 'بيانات الشركة: العنوان، الأرقام، المؤسس.' : 'Company record: address, phones, founder.',
+    example: JSON.stringify({ name: company.name, phones: company.phones.map((p) => p.href), founder: company.founder }, null, 2),
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'api.title')} · ${t(locale, 'nav.fabrics')}`}
+  description={t(locale, 'api.subtitle')}
+  path="api"
+>
+  <div class="azt-container" style="padding-block: 40px 96px; max-width: 860px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'api.title') }]} />
+    <h1 style="margin: 0;">{t(locale, 'api.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'api.subtitle')}</p>
+
+    <div style="margin-block-start: 32px; display: grid; gap: 24px;">
+      {endpoints.map((e) => (
+        <section class="azt-card" style="padding: 24px; display: grid; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <span class="azt-mono" style="background: var(--color-ink-900); color: var(--color-sand-50); padding: 4px 10px; border-radius: var(--azt-radius); font-size: 0.78rem;">{e.method}</span>
+            <code class="azt-mono" style="font-size: 0.95rem;">{origin}{locUrl(locale, e.endpoint.replace(/^\//, '')).replace(/\/$/, '')}</code>
+          </div>
+          <p style="margin: 0; color: var(--color-ink-700);">{e.desc}</p>
+          <pre class="azt-mono" style="margin: 0; padding: 16px; background: var(--color-sand-100); border-radius: var(--azt-radius); overflow-x: auto; font-size: 0.78rem; line-height: 1.6; white-space: pre-wrap;">{e.example}</pre>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,33 @@
+---
+/**
+ * ProvenancePage (§8) — open lot chain, deterministic hash chain,
+ * SVG map, embed + QR.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ProvenanceApp from '../components/ProvenanceApp.tsx';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'provenance.title')} · ${t(locale, 'nav.fabrics')}`}
+  description={t(locale, 'provenance.subtitle')}
+  path="provenance"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'provenance.title') }]} />
+    <h1 style="margin: 0;">{t(locale, 'provenance.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'provenance.subtitle')}</p>
+    <div style="margin-block-start: 32px;">
+      <ProvenanceApp locale={locale} client:load />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,83 @@
+---
+/**
+ * BaseLayout — shell: head, SEO, JSON-LD, skip link, header, footer (§17).
+ * dir is set from locale here — never by JS (§15).
+ */
+import '../styles/tokens.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SampleCount from '../components/SampleCount.tsx';
+import { COMPANY } from '../data/company';
+import { jsonld, canonical, hreflangPairs, organizationJsonld, localBusinessJsonld } from '../lib/seo';
+import type { Locale } from '../lib/url';
+
+export interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  path: string; // route path without locale prefix
+  type?: 'website' | 'product' | 'article';
+  extraJsonld?: unknown[];
+  bodyClass?: string;
+}
+
+const { locale, title, description, path, type = 'website', extraJsonld = [], bodyClass = '' } = Astro.props;
+const origin = Astro.site?.toString().replace(/\/+$/, '') ?? 'https://alazhartex.com';
+const meta = { title, description, path, locale, type, origin };
+const pairs = hreflangPairs(meta);
+const ld = [organizationJsonld(), localBusinessJsonld(), ...extraJsonld];
+---
+
+<!doctype html>
+<html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical(meta)} />
+    {pairs.filter((p) => p.rel !== 'canonical').map((p) => (
+      <link rel={p.rel} hreflang={p.hreflang} href={p.href} />
+    ))}
+
+    {/* OG + Twitter, 1200×630 (§17) */}
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={locale === 'ar' ? COMPANY.nameAr : COMPANY.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical(meta)} />
+    <meta property="og:image" content={`${origin}/media/og-default.svg`} />
+    <meta property="og:locale" content={locale === 'ar' ? 'ar_EG' : 'en_EG'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${origin}/media/og-default.svg`} />
+
+    {/* Fonts: subset per family via Google Fonts, preconnect + swap (§16) */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@500;700&display=swap"
+    />
+
+    {ld.map((obj) => (
+      <script type="application/ld+json" set:html={jsonld(obj)} />
+    ))}
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body class={bodyClass} data-locale={locale}>
+    <a class="azt-skip" href="#main">{locale === 'ar' ? 'تخطَّ إلى المحتوى' : 'Skip to content'}</a>
+    <Header locale={locale} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <SampleCount locale={locale} client:load />
+  </body>
+</html>

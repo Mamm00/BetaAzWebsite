@@ -1,0 +1,122 @@
+---
+/**
+ * GalleryPage (§10) — frontage hero, floor shots, hours, byte-exact Arabic
+ * address at display size, both numbers as large rows, click-to-activate
+ * map, parking note.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { media } from '../assets/media';
+import { COMPANY } from '../data/company';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { gallery } from '../lib/content';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import GalleryCard from '../components/GalleryCard.astro';
+import PhoneRow from '../components/PhoneRow.astro';
+import DirectionsLink from '../components/DirectionsLink.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const frontage = gallery.find((g) => g.id === 'frontage')!;
+const floors = gallery.filter((g) => g.id !== 'frontage');
+const dayNames: Record<string, { ar: string; en: string }> = {
+  sat: { ar: 'السبت', en: 'Sat' },
+  sun: { ar: 'الأحد', en: 'Sun' },
+  mon: { ar: 'الاثنين', en: 'Mon' },
+  tue: { ar: 'الثلاثاء', en: 'Tue' },
+  wed: { ar: 'الأربعاء', en: 'Wed' },
+  thu: { ar: 'الخميس', en: 'Thu' },
+};
+const localizedDay = (d: string) => (locale === 'ar' ? dayNames[d]?.ar ?? d : dayNames[d]?.en ?? d);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'gallery.title')} · ${t(locale, 'nav.gallery')}`}
+  description={t(locale, 'gallery.subtitle')}
+  path="gallery"
+>
+  <section style="position: relative;">
+    {media(frontage.src) && (
+      <Image
+        src={media(frontage.src)!}
+        alt={locale === 'ar' ? frontage.alt.ar : frontage.alt.en}
+        width={1920}
+        height={1080}
+        widths={[800, 1280, 1600, 1920]}
+        sizes="100vw"
+        loading="eager"
+        decoding="async"
+        style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block;"
+      />
+    )}
+  </section>
+
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.gallery') }]} />
+    <h1 style="margin: 0;">{t(locale, 'gallery.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'gallery.subtitle')}</p>
+
+    <div class="azt-grid" style="grid-template-columns: 1fr 1fr; gap: 48px; margin-block-start: 40px; align-items: start;">
+      <!-- left: address, hours, phones -->
+      <div class="azt-cv" style="display: flex; flex-direction: column; gap: 32px;">
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'gallery.addressTitle')}</h2>
+          {/* byte-exact Arabic address at display size (§3) */}
+          <p class="azt-display-address" lang="ar" dir="rtl" style={`font-family: var(--font-naskh); font-weight: 700; font-size: clamp(1.3rem, 3vw, 2rem); line-height: 1.4; margin-block-start: 12px; color: var(--color-ink-900);`}>
+            {COMPANY.addressAr}
+          </p>
+          <p style="color: var(--color-ink-700); margin-block-start: 10px;">
+            {locale === 'ar' ? `المعلم: ${COMPANY.landmarkAr}` : `Landmark: ${COMPANY.landmarkEn}`}
+          </p>
+          <div style="margin-block-start: 16px;"><DirectionsLink locale={locale} /></div>
+        </section>
+
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'gallery.hoursTitle')}</h2>
+          {COMPANY.hoursAssumed && (
+            <p class="azt-mono" style="font-size: 0.78rem; color: var(--color-madder); margin-block-start: 8px;">
+              {t(locale, 'gallery.hoursAssumed')}
+            </p>
+          )}
+          <ul style="list-style: none; padding: 0; margin: 12px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px;">
+            {COMPANY.hours.map((h) => (
+              <li class="azt-card" style="padding: 10px 14px; display: flex; justify-content: space-between; gap: 12px; font-size: 0.85rem;">
+                <span>{localizedDay(h.day)}</span>
+                <span class="azt-mono">{h.from}–{h.to}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'gallery.phonesTitle')}</h2>
+          <div>
+            <PhoneRow display={COMPANY.phone1Display} href={`tel:${COMPANY.phone1}`} locale={locale} />
+            <PhoneRow display={COMPANY.phone2Display} href={`tel:${COMPANY.phone2}`} locale={locale} />
+          </div>
+          <p style="margin: 14px 0 0; font-size: 0.82rem; color: var(--color-ink-500);">{t(locale, 'gallery.parking')}</p>
+        </section>
+      </div>
+
+      <!-- right: floor shots -->
+      <div class="azt-cv" style="display: grid; gap: 20px;">
+        {floors.map((g) => (
+          <GalleryCard image={g} locale={locale} ratio="4 / 3" />
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  @media (max-width: 900px) {
+    .azt-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

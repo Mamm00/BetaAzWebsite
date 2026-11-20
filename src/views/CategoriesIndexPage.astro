@@ -1,0 +1,39 @@
+---
+/**
+ * CategoriesIndexPage — grid of category plates linking to filtered catalogs.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { categories, fabrics } from '../lib/content';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'nav.categories')} · ${t(locale, 'nav.fabrics')}`}
+  description={t(locale, 'catalog.subtitle')}
+  path="categories"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.categories') }]} />
+    <h1 style="margin: 0;">{t(locale, 'nav.categories')}</h1>
+    <div class="azt-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-block-start: 32px;">
+      {categories.map((c) => (
+        <a class="azt-card" href={locUrl(locale, `categories/${c.slug}`)} style="padding: 24px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit; min-height: 160px;">
+          <p class="azt-mono" style="margin: 0; font-size: 0.75rem; color: var(--color-ink-500);">
+            {fabrics.filter((f) => f.category === c.slug).length} {t(locale, 'common.results_other')}
+          </p>
+          <h2 style="margin: 0;">{locale === 'ar' ? c.name.ar : c.name.en}</h2>
+          <p style="margin: 0; font-size: 0.88rem; color: var(--color-ink-700);">{locale === 'ar' ? c.description.ar : c.description.en}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

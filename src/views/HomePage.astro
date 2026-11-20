@@ -1,0 +1,240 @@
+---
+/**
+ * HomePage (§10). Full-bleed macro hero, gallery band, grade strip,
+ * category mosaic, Twin Studio + Provenance teasers, founder note,
+ * journal trio, contact band.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COMPANY } from '../data/company';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { gallery, journal, categories, grades, fabrics, priceLabel } from '../lib/content';
+import { media } from '../assets/media';
+import { Image } from 'astro:assets';
+import { waLink } from '../lib/wa';
+import { waTemplate } from '../lib/wa';
+import { fabricArt } from '../lib/fabricArt';
+import GradeChip from '../components/GradeChip.astro';
+import GalleryCard from '../components/GalleryCard.astro';
+import DirectionsLink from '../components/DirectionsLink.astro';
+import PhoneRow from '../components/PhoneRow.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const heroImage = gallery.find((g) => g.id === 'floor-1')!;
+const heroUrl = media(heroImage.src);
+
+const mosaicCats = [
+  categories.find((c) => c.slug === 'womens-apparel')!,
+  categories.find((c) => c.slug === 'shirting')!,
+  categories.find((c) => c.slug === 'jersey-knit')!,
+  categories.find((c) => c.slug === 'lace-tulle')!,
+  categories.find((c) => c.slug === 'home-textiles')!,
+];
+
+const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? 'كريب جورجيت' : 'Crepe Georgette', grade: 'A', moq: 10 });
+---
+
+<BaseLayout
+  locale={locale}
+  title={locale === 'ar' ? `${COMPANY.nameAr} — ${t(locale, 'home.heroTitle')}` : `${COMPANY.name} — ${t(locale, 'home.heroTitle')}`}
+  description={t(locale, 'home.heroSubtitle')}
+  path=""
+>
+  <!-- 1. Hero — full-bleed macro, 100svh -->
+  <section class="azt-hero" style="position: relative; height: 100svh; min-height: 560px; overflow: hidden; display: flex; align-items: flex-end;">
+    {heroUrl && (
+      <Image
+        src={heroUrl}
+        alt={locale === 'ar' ? heroImage.alt.ar : heroImage.alt.en}
+        width={1920}
+        height={1080}
+        widths={[800, 1280, 1600, 1920]}
+        sizes="100vw"
+        fetchpriority="high"
+        decoding="async"
+        style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"
+      />
+    )}
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgb(12 11 9 / 0.15) 0%, rgb(12 11 9 / 0.55) 100%);"></div>
+    <div class="azt-container" style="position: relative; color: var(--color-sand-50); padding-block-end: clamp(40px, 8vh, 96px); padding-block-start: 96px;">
+      <p class="azt-mono" style="font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-giza); margin: 0 0 16px;">
+        {t(locale, 'home.heroKicker')} · {t(locale, 'home.heroSpec')}
+      </p>
+      <h1 style="max-width: 18ch;">{t(locale, 'home.heroTitle')}</h1>
+      <p style="max-width: 52ch; color: rgba(247, 243, 236, 0.92); margin-block-end: 32px;">{t(locale, 'home.heroSubtitle')}</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a class="azt-btn" href={locUrl(locale, 'gallery')}>{t(locale, 'home.ctaVisit')}</a>
+        <a class="azt-btn azt-btn-ghost" style="color: var(--color-sand-50); border-color: var(--color-sand-50);" href={waLink(waText)} target="_blank" rel="noopener">{t(locale, 'home.ctaWhatsApp')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Gallery band -->
+  <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container">
+      <div class="azt-grid" style="grid-template-columns: 1.4fr 1fr; align-items: center;">
+        <div>
+          <h2>{t(locale, 'home.galleryBandTitle')}</h2>
+          <p style="color: var(--color-ink-700);">{t(locale, 'home.galleryBandBody')}</p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-block-start: 20px;">
+            <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'gallery')}>{t(locale, 'home.galleryBandCta')}</a>
+            <DirectionsLink locale={locale} />
+          </div>
+        </div>
+        <GalleryCard image={gallery.find((g) => g.id === 'frontage')!} locale={locale} ratio="4 / 3" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Grade strip -->
+  <section class="azt-cv" style="background: var(--color-sand-100); padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-block-end: 32px;">
+        <div>
+          <h2 style="margin: 0;">{t(locale, 'home.gradesTitle')}</h2>
+          <p style="color: var(--color-ink-700); margin: 8px 0 0; max-width: 60ch;">{t(locale, 'home.gradesBody')}</p>
+        </div>
+        <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'grades')}>{t(locale, 'home.gradesCta')}</a>
+      </div>
+      <div class="azt-grid" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        {grades.map((g) => (
+          <a class="azt-card" href={locUrl(locale, 'grades')} style="padding: 24px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit;">
+            <GradeChip grade={g} locale={locale} />
+            <h3 style="margin: 0;">{locale === 'ar' ? g.name.ar : g.name.en}</h3>
+            <p style="margin: 0; color: var(--color-ink-700); font-size: 0.9rem;">{locale === 'ar' ? g.description.ar : g.description.en}</p>
+            <p class="azt-mono" style="margin: 0; font-size: 0.78rem; color: var(--color-ink-500);">{locale === 'ar' ? g.priceImplication.ar : g.priceImplication.en}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Category mosaic — Women's Apparel largest -->
+  <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container">
+      <h2>{t(locale, 'home.categoriesTitle')}</h2>
+      <p style="color: var(--color-ink-700); margin-top: 8px;">{t(locale, 'home.categoriesBody')}</p>
+      <div class="azt-grid" style="grid-template-columns: repeat(4, 1fr); grid-template-rows: 260px 260px; gap: 16px; margin-block-start: 32px;">
+        {mosaicCats.map((c, i) => (
+          <a
+            class="azt-card"
+            href={locUrl(locale, `categories/${c.slug}`)}
+            style={`grid-column: span 2; grid-row: span ${i === 0 ? 2 : 1}; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; text-decoration: none; color: inherit; background: var(--color-sand-${i === 0 ? '100' : '50'});`}
+          >
+            <p class="azt-mono" style="margin: 0; font-size: 0.75rem; color: var(--color-ink-500);">{fabrics.filter((f) => f.category === c.slug).length} {t(locale, 'common.results_other')}</p>
+            <h3 style="margin: 0;">{locale === 'ar' ? c.name.ar : c.name.en}</h3>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--color-ink-700);">{locale === 'ar' ? c.description.ar : c.description.en}</p>
+          </a>
+        ))}
+        <a class="azt-card" href={locUrl(locale, 'categories')} style="grid-column: span 2; padding: 24px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit; font-weight: 600;">
+          {t(locale, 'common.viewAll')} →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Twin Studio teaser -->
+  <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container">
+      <div class="azt-grid" style="grid-template-columns: 1fr 1.2fr; align-items: center; gap: 48px;">
+        <div>
+          <h2 style="margin-top: 0;">{t(locale, 'home.twinTitle')}</h2>
+          <p style="color: var(--color-ink-700);">{t(locale, 'home.twinBody')}</p>
+          <a class="azt-btn" href={locUrl(locale, 'twin-studio')} style="margin-block-start: 20px;">{t(locale, 'home.twinCta')}</a>
+        </div>
+        <div class="azt-card" style="aspect-ratio: 3 / 4; overflow: hidden; position: relative;">
+          <div set:html={fabricArt({ seed: 7, shade: '#1E3050', grade: 'A', construction: 'knit', w: 900, h: 1200 })} style="width: 100%; height: 100%;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Provenance teaser -->
+  <section class="azt-cv" style="background: var(--color-ink-900); color: var(--color-sand-50); padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container">
+      <div class="azt-grid" style="grid-template-columns: 1.2fr 1fr; align-items: center; gap: 48px;">
+        <div>
+          <p class="azt-mono" style="color: var(--color-giza); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px;">Provenance Sheet</p>
+          <h2 style="color: var(--color-sand-50); margin-top: 0;">{t(locale, 'home.provenanceTitle')}</h2>
+          <p style="color: rgba(247, 243, 236, 0.85);">{t(locale, 'home.provenanceBody')}</p>
+          <a class="azt-btn" href={locUrl(locale, 'provenance')} style="margin-block-start: 20px; background: var(--color-giza); border-color: var(--color-giza);">{t(locale, 'home.provenanceCta')}</a>
+        </div>
+        <div class="azt-card" style="padding: 20px; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.8; background: rgb(247 243 236 / 6%); border-color: rgb(247 243 236 / 15%);">
+          <div style="color: var(--color-giza);">LT-01-A</div>
+          <div>→ received 2026-10-04</div>
+          <div>→ graded A · 12 bolts</div>
+          <div>→ priced 225.00 EGP/m</div>
+          <div>→ listed · 904 m in stock</div>
+          <div style="margin-block-start: 8px; color: rgba(247,243,236,0.6);">sha256: 9f2a…c41e</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Founder note, signed -->
+  <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container" style="max-width: 760px;">
+      <h2 style="margin-top: 0;">{t(locale, 'home.founderTitle')}</h2>
+      <p style="font-size: 1.1rem; color: var(--color-ink-700);">{t(locale, 'home.founderBody')}</p>
+      <p class="azt-mono" style="color: var(--color-ink-500); margin-block-start: 20px;">{t(locale, 'home.founderSignature')}</p>
+    </div>
+  </section>
+
+  <!-- 8. Journal trio -->
+  <section class="azt-cv" style="background: var(--color-sand-100); padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-block-end: 32px;">
+        <div>
+          <h2 style="margin: 0;">{t(locale, 'home.journalTitle')}</h2>
+          <p style="color: var(--color-ink-700); margin: 8px 0 0;">{t(locale, 'journal.subtitle')}</p>
+        </div>
+        <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'journal')}>{t(locale, 'home.journalCta')}</a>
+      </div>
+      <div class="azt-grid" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        {journal.map((a) => (
+          <a class="azt-card" href={locUrl(locale, `journal/${a.slug}`)} style="padding: 0; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <div set:html={fabricArt({ seed: 31 + a.slug.length * 13, shade: '#8C3B2E', grade: 'A', construction: 'plain', w: 800, h: 450 })} style="aspect-ratio: 16 / 9;" />
+            <div style="padding: 20px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+              <h3 style="margin: 0; font-size: 1.05rem;">{locale === 'ar' ? a.title.ar : a.title.en}</h3>
+              <p style="margin: 0; color: var(--color-ink-700); font-size: 0.88rem; flex: 1;">{locale === 'ar' ? a.excerpt.ar : a.excerpt.en}</p>
+              <span class="azt-mono" style="font-size: 0.75rem; color: var(--color-ink-500);">{a.date} · {t(locale, 'journal.minRead', { min: a.minRead })}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Contact band -->
+  <section class="azt-cv" style="padding-block: clamp(48px, 8vw, 96px);">
+    <div class="azt-container">
+      <div class="azt-grid" style="grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start;">
+        <div>
+          <h2 style="margin-top: 0;">{t(locale, 'home.contactTitle')}</h2>
+          <p style="color: var(--color-ink-700);">{t(locale, 'home.contactBody')}</p>
+          <div style="margin-block-start: 24px;">
+            <PhoneRow display={COMPANY.phone1Display} href={`tel:${COMPANY.phone1}`} locale={locale} />
+            <PhoneRow display={COMPANY.phone2Display} href={`tel:${COMPANY.phone2}`} locale={locale} />
+          </div>
+          <div style="margin-block-start: 20px;">
+            <a class="azt-btn" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener">{t(locale, 'home.ctaWhatsApp')}</a>
+          </div>
+        </div>
+        <a href="https://www.openstreetmap.org/search?query=Ziraa%2C%20Zagazig%2C%20Sharkia%2C%20Egypt" target="_blank" rel="noopener" class="azt-card" style="overflow: hidden; text-decoration: none; color: inherit;" data-map-cta>
+          <div style="aspect-ratio: 4 / 3; background: var(--color-sand-200); display: flex; align-items: center; justify-content: center;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-ink-700)" stroke-width="1.4" aria-hidden="true" focusable="false">
+              <path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+          </div>
+          <div style="padding: 12px 14px; font-size: 0.85rem;">{t(locale, 'gallery.mapCta')}</div>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

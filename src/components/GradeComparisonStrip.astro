@@ -1,0 +1,42 @@
+---
+/**
+ * GradeComparisonStrip — the A/B/C macro comparison, visible not described (§4).
+ * Three schematic plates side by side, colour-coded by accent only.
+ */
+import { fabricArt } from '../lib/fabricArt';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import type { Grade } from '../lib/schema';
+
+export interface Props {
+  locale: Locale;
+  grades: Grade[];
+  seed?: number;
+  shade?: string;
+  composition?: string;
+}
+
+const { locale, grades, seed = 42, shade = '#C8A45C', composition = 'plain' } = Astro.props;
+const accentVar: Record<string, string> = { ok: 'var(--color-ok)', indigo: 'var(--color-indigo)', madder: 'var(--color-madder)' };
+---
+
+<div class="azt-grade-strip" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+  {grades.map((g, i) => (
+    <figure class="azt-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+      <div style="aspect-ratio: 4 / 5; background: var(--color-sand-100);" set:html={fabricArt({ seed: seed + i * 977, shade, grade: g.grade, construction: composition, w: 800, h: 1000 })} />
+      <figcaption style="padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+        <span style={`font-weight: 700; color: ${accentVar[g.accent]};`}>{locale === 'ar' ? g.name.ar : g.name.en}</span>
+        <span style="font-size: 0.82rem; color: var(--color-ink-700);">{locale === 'ar' ? g.description.ar : g.description.en}</span>
+        <a href={locUrl(locale, 'grades')} style={`font-size: 0.78rem; color: ${accentVar[g.accent]}; text-decoration: none; margin-block-start: 4px;`}>{t(locale, 'common.learnMore')} →</a>
+      </figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  @media (max-width: 768px) {
+    .azt-grade-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

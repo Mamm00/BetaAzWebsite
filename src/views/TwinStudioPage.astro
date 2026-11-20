@@ -1,0 +1,39 @@
+---
+/**
+ * TwinStudioPage (§8) — drape/stretch/weight tuning with a three.js island
+ * (client:only — §6.2), manifest export.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { fabrics } from '../lib/content';
+import { waLink } from '../lib/wa';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TwinStudioApp from '../components/TwinStudioApp.tsx';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'twin.title')} · ${t(locale, 'nav.fabrics')}`}
+  description={t(locale, 'twin.subtitle')}
+  path="twin-studio"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'twin.title') }]} />
+    <h1 style="margin: 0;">{t(locale, 'twin.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'twin.subtitle')}</p>
+    <div style="margin-block-start: 32px;">
+      <TwinStudioApp locale={locale} fabrics={fabrics} client:load />
+    </div>
+    <p style="margin-block-start: 24px;">
+      <a class="azt-btn azt-btn-ghost" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener">{t(locale, 'wa.label')}</a>
+      <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'fabrics')} style={{ marginInlineStart: 8 }}>{t(locale, 'nav.fabrics')}</a>
+    </p>
+  </div>
+</BaseLayout>

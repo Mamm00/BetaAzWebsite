@@ -1,0 +1,64 @@
+---
+/**
+ * FabricCard — grade chip, image, price, code. Link carries the grade
+ * segment in the URL (§4).
+ */
+import { Image } from 'astro:assets';
+import { media } from '../assets/media';
+import { fabricArt } from '../lib/fabricArt';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { priceLabel } from '../lib/content';
+import GradeChip from './GradeChip.astro';
+import RenderTag from './RenderTag.astro';
+import StatusPill from './StatusPill.astro';
+import type { Fabric } from '../lib/schema';
+
+export interface Props {
+  fabric: Fabric;
+  locale: Locale;
+}
+
+const { fabric, locale } = Astro.props;
+const href = locUrl(locale, `fabrics/${fabric.slug}`);
+const photoUrl = media(fabric.photo);
+const alt =
+  locale === 'ar'
+    ? `${t(locale, 'product.alt.hero', { name: fabric.name.ar })} — درجة ${fabric.grade}`
+    : `${t(locale, 'product.alt.hero', { name: fabric.name.en })} — grade ${fabric.grade}`;
+---
+
+<article class="azt-card azt-fabric-card" style="display: flex; flex-direction: column; overflow: hidden;">
+  <a href={href} class="azt-fabric-card-media" style="position: relative; display: block; aspect-ratio: 4 / 5; background: var(--color-sand-100); overflow: hidden;">
+    {photoUrl ? (
+      <Image src={photoUrl} alt={alt} width={800} height={1000} widths={[400, 640, 800, 1000]} sizes="(min-width: 640px) 25vw, 50vw" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+    ) : (
+      <div set:html={fabricArt({ seed: fabric.seed ?? 0, shade: fabric.shades[0]?.hex ?? '#C8A45C', grade: fabric.grade, construction: fabric.composition, w: 800, h: 1000 })} style="width: 100%; height: 100%;" />
+    )}
+    <div style="position: absolute; inset-block-start: 10px; inset-inline-start: 10px; display: flex; gap: 8px;">
+      <GradeChip grade={fabric} locale={locale} size="sm" />
+      {fabric.source === 'render' && <RenderTag locale={locale} />}
+    </div>
+  </a>
+  <div style="padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+      <a href={href} style="text-decoration: none; color: inherit; font-weight: 600; line-height: 1.3;">
+        <h3 style="margin: 0; font-size: 1rem;">{locale === 'ar' ? fabric.name.ar : fabric.name.en}</h3>
+      </a>
+      <span class="azt-mono azt-grade-c" style="font-size: 0.72rem;">{fabric.code}</span>
+    </div>
+    <p class="azt-mono" style="margin: 0; font-size: 0.75rem; color: var(--color-ink-500);">
+      {fabric.composition} · {fabric.gsm} g/m²
+    </p>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-block-start: auto; padding-block-start: 6px;">
+      <strong class="azt-mono">{priceLabel(fabric.pricePerMetre, locale)}<span style="font-weight: 400; color: var(--color-ink-500);">/{t(locale, 'common.metresShort')}</span></strong>
+      <StatusPill status={fabric.availability} locale={locale} />
+    </div>
+  </div>
+</article>
+
+<style>
+  .azt-fabric-card:hover .azt-fabric-card-media {
+    outline: 1px solid var(--color-giza);
+  }
+</style>

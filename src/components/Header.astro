@@ -1,0 +1,151 @@
+---
+/**
+ * Header — brand wordmark, nav, right rail (§9).
+ * Nav: Fabrics · Grades · Categories · Gallery · Wholesale · Contact.
+ * Right rail: Match icon, language toggle, sample count, WhatsApp.
+ */
+import { COMPANY } from '../data/company';
+import { url, locUrl, type Locale } from '../lib/url';
+import { t } from '../lib/i18n';
+import LangToggle from './LangToggle.astro';
+import { waLink } from '../lib/wa';
+
+export interface Props {
+  locale: Locale;
+  path?: string;
+}
+
+const { locale, path = '' } = Astro.props;
+
+const navItems = [
+  { key: 'nav.fabrics', href: '/fabrics' },
+  { key: 'nav.grades', href: '/grades' },
+  { key: 'nav.categories', href: '/categories' },
+  { key: 'nav.gallery', href: '/gallery' },
+  { key: 'nav.wholesale', href: '/wholesale' },
+  { key: 'nav.contact', href: '/contact' },
+] as const;
+---
+
+<header class="azt-header azt-hairline-b" style="position: sticky; inset-block-start: 0; z-index: 50; background: var(--color-sand-50);">
+  <div class="azt-container" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; flex-wrap: wrap;">
+    <a href={locUrl(locale, '')} class="azt-brand" aria-label={locale === 'ar' ? COMPANY.nameAr : COMPANY.name} style="text-decoration: none; color: inherit; display: flex; align-items: baseline; gap: 10px;">
+      <span class="azt-brand-ar" style="font-family: var(--font-naskh); font-weight: 700; font-size: 1.35rem; line-height: 1;">{COMPANY.nameAr}</span>
+      <span class="azt-brand-en azt-mono" style="font-size: 0.72rem; letter-spacing: 0.14em; color: var(--color-ink-500);">AL AZHAR TEX</span>
+    </a>
+
+    <nav aria-label="Primary" class="azt-nav-desktop" style="display: flex; align-items: center; gap: 4px;">
+      {navItems.map((item) => (
+        <a href={locUrl(locale, item.href)} class="azt-nav-link" style="padding: 8px 12px; font-size: 0.95rem; text-decoration: none; color: inherit; border-radius: var(--azt-radius);">
+          {t(locale, item.key)}
+        </a>
+      ))}
+      <details class="azt-nav-cats" style="position: relative;">
+        <summary style="list-style: none; cursor: pointer; padding: 8px 12px; font-size: 0.95rem; border-radius: var(--azt-radius);">{t(locale, 'nav.categories')}</summary>
+        <div class="azt-card azt-dropdown" style="position: absolute; inset-block-start: 100%; inset-inline-end: 0; min-width: 220px; padding: 8px; display: none;">
+          <style is:global>.azt-nav-cats[open] .azt-dropdown { display: block; }</style>
+          <div class="azt-cat-grid">
+            <a href={locUrl(locale, 'categories/womens-apparel')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.fabrics')}</a>
+            <a href={locUrl(locale, 'categories/shirting')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Shirting</a>
+            <a href={locUrl(locale, 'categories/jersey-knit')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Jersey &amp; Knit</a>
+            <a href={locUrl(locale, 'categories/lace-tulle')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Lace &amp; Tulle</a>
+            <a href={locUrl(locale, 'categories/home-textiles')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.categories')}</a>
+            <a href={locUrl(locale, 'categories/linings')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Linings</a>
+            <a href={locUrl(locale, 'categories/surplus')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">Surplus</a>
+          </div>
+        </div>
+      </details>
+    </nav>
+
+    <div class="azt-header-rail" style="display: flex; align-items: center; gap: 10px;">
+      <a href={locUrl(locale, 'match')} aria-label={t(locale, 'match.title')} style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--azt-hairline); border-radius: var(--azt-radius); color: inherit; text-decoration: none;" title={t(locale, 'match.title')}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </a>
+      <LangToggle locale={locale} path={path} />
+      <a class="azt-btn" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8 8 0 1 1 12 20Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.6-.2-1.3-.5-1.9-.9-.4-.2-.8-.5-1.2-.8-.1-.1-.3-.2-.5-.1-.2.1-.4.2-.5.3-.2.2-.7.7-.9 1-.1.2 0 .4 0 .5l.6 1.8c.2.6.8 1.2 1.2 1.5.1.1.2.2.3.2.1 0 .2 0 .3-.1l.7-.8c.2-.2.4-.2.5-.1.2.1.3.2.4.3l.2.3c.1.1.1.2.2.3 0 .1-.1.2-.1.3l-.3.8c-.1.2-.1.4 0 .5l.3.6c.1.1.2.2.2.3 0 .1-.1.2-.1.3-.1.2-.2.4-.1.6l.1.3c0 .1.1.2.2.2h.2c.1 0 .2 0 .2-.1l.5-.6c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.1.5 0 .1-.1.2-.2.3-.3l.8-.7c.2-.2.3-.2.5-.1.2.1.3.2.4.4l.3.5c.1.2.1.4 0 .5l-.3.8c-.1.2-.2.3-.4.4-.1.1-.3.1-.5 0l-.8-.5c-.2-.1-.4-.1-.6 0Z"/></svg>
+        {t(locale, 'wa.label')}
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile nav: checkbox toggle, no JS required, focus-visible only -->
+  <div class="azt-container" style="display: none;">
+    <input type="checkbox" id="azt-nav-toggle" class="azt-visually-hidden" aria-hidden="true" tabindex="-1" />
+    <label for="azt-nav-toggle" class="azt-nav-burger" aria-label={t(locale, 'common.openMenu')}>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </label>
+    <nav aria-label="Primary mobile" class="azt-nav-mobile-menu">
+      {navItems.map((item) => (
+        <a href={locUrl(locale, item.href)} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, item.key)}</a>
+      ))}
+      <a href={locUrl(locale, 'categories/womens-apparel')} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.categories')}</a>
+      <a href={locUrl(locale, 'trade-desk')} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.tradeDesk')}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .azt-brand:hover {
+    opacity: 0.75;
+  }
+  .azt-nav-link:hover {
+    background: var(--color-sand-100);
+  }
+  .azt-nav-cats summary::-webkit-details-marker {
+    display: none;
+  }
+  .azt-nav-cats summary:hover {
+    background: var(--color-sand-100);
+    border-radius: var(--azt-radius);
+  }
+  .azt-cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .azt-cat-grid a:hover {
+    background: var(--color-sand-100);
+  }
+  .azt-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .azt-nav-burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid var(--azt-hairline);
+    border-radius: var(--azt-radius);
+  }
+  .azt-nav-mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding-block-end: 12px;
+  }
+  @media (max-width: 900px) {
+    .azt-nav-desktop {
+      display: none;
+    }
+    .azt-container:has(.azt-nav-burger) {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 48px;
+    }
+    .azt-nav-burger {
+      display: inline-flex;
+    }
+    #azt-nav-toggle:checked ~ .azt-nav-mobile-menu {
+      display: flex;
+    }
+  }
+</style>

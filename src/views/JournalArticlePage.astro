@@ -1,0 +1,74 @@
+---
+/**
+ * JournalArticlePage — markdown-free plain body, Article JSON-LD.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fabricArt } from '../lib/fabricArt';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { getJournal, journal } from '../lib/content';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import type { JournalArticle } from '../lib/schema';
+
+export interface Props {
+  locale: Locale;
+  article: JournalArticle;
+}
+
+const { locale, article } = Astro.props;
+
+const articleJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: locale === 'ar' ? article.title.ar : article.title.en,
+  description: locale === 'ar' ? article.excerpt.ar : article.excerpt.en,
+  datePublished: article.date,
+  author: { '@type': 'Person', name: locale === 'ar' ? article.author.ar : article.author.en },
+  inLanguage: locale,
+  articleBody: locale === 'ar' ? article.body.ar : article.body.en,
+};
+
+const related = journal.filter((j) => j.id !== article.id).slice(0, 2);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${locale === 'ar' ? article.title.ar : article.title.en} · ${t(locale, 'nav.journal')}`}
+  description={locale === 'ar' ? article.excerpt.ar : article.excerpt.en}
+  path={`journal/${article.slug}`}
+  type="article"
+  extraJsonld={[articleJsonld]}
+>
+  <article class="azt-container" style="padding-block: 32px 96px; max-width: 760px;">
+    <Breadcrumb
+      locale={locale}
+      crumbs={[
+        { label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' },
+        { label: t(locale, 'nav.journal'), href: 'journal' },
+        { label: locale === 'ar' ? article.title.ar : article.title.en },
+      ]}
+    />
+    <p class="azt-mono" style="color: var(--color-ink-500); margin: 0 0 12px; font-size: 0.8rem;">
+      {article.date} · {t(locale, 'journal.minRead', { min: article.minRead })} · {locale === 'ar' ? article.author.ar : article.author.en}
+    </p>
+    <h1 style="margin: 0 0 16px;">{locale === 'ar' ? article.title.ar : article.title.en}</h1>
+    <p style="font-size: 1.1rem; color: var(--color-ink-700); margin-block-end: 32px;">{locale === 'ar' ? article.excerpt.ar : article.excerpt.en}</p>
+    <div set:html={fabricArt({ seed: article.slug.length * 37 + 5, shade: '#8C3B2E', grade: 'A', construction: 'plain', w: 1200, h: 675 })} style="aspect-ratio: 16 / 9; border-radius: var(--azt-radius); border: 1px solid var(--azt-hairline); margin-block-end: 40px;" />
+
+    {/* Body: plain paragraphs (§6.8 — no raw-key strings) */}
+    {(locale === 'ar' ? article.body.ar : article.body.en).split('\n\n').map((para) => (
+      <p style={`margin: 0 0 1.2em; color: var(--color-ink-700);`}>{para.trim()}</p>
+    ))}
+
+    {related.length > 0 && (
+      <section style="margin-block-start: 64px; border-block-start: 1px solid var(--azt-hairline); padding-block-start: 32px;">
+        <h2 style="font-size: 1.1rem;">{t(locale, 'home.journalTitle')}</h2>
+        <ul style="list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px;">
+          {related.map((r) => (
+            <li><a href={locUrl(locale, `journal/${r.slug}`)} style="color: var(--color-ink-700); text-decoration: none;">→ {locale === 'ar' ? r.title.ar : r.title.en}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+/**
+ * AboutPage (§10) — the house, the stock, the founder, stats (TBD-safe).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { COMPANY } from '../data/company';
+import { t } from '../lib/i18n';
+import { locUrl, type Locale } from '../lib/url';
+import { waLink } from '../lib/wa';
+import { fabricArt } from '../lib/fabricArt';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CertBadge from '../components/CertBadge.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'about.title')} · ${COMPANY.nameAr}`}
+  description={t(locale, 'about.subtitle')}
+  path="about"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'nav.about') }]} />
+    <h1 style="margin: 0;">{t(locale, 'about.title')}</h1>
+    <p style="color: var(--color-ink-700); margin-top: 8px; max-width: 64ch;">{t(locale, 'about.subtitle')}</p>
+
+    <div class="azt-grid" style="grid-template-columns: 5fr 7fr; gap: 48px; margin-block-start: 40px; align-items: start;">
+      <div class="azt-card" style="overflow: hidden;">
+        <div set:html={fabricArt({ seed: 555, shade: '#C8A45C', grade: 'A', construction: 'brocade', w: 1000, h: 1250 })} style="aspect-ratio: 4 / 5;" />
+      </div>
+      <div class="azt-cv" style="display: flex; flex-direction: column; gap: 20px;">
+        <p style="font-size: 1.05rem; color: var(--color-ink-700);">{t(locale, 'about.body1')}</p>
+        <p style="font-size: 1.05rem; color: var(--color-ink-700);">{t(locale, 'about.body2')}</p>
+        <p style="font-size: 1.05rem; color: var(--color-ink-700);">{t(locale, 'about.body3')}</p>
+
+        <section class="azt-card" style="padding: 24px; display: grid; gap: 12px;">
+          <h2 style="margin: 0;">{t(locale, 'about.founderTitle')}</h2>
+          <p class="azt-mono" style="margin: 0; color: var(--color-ink-500);">{t(locale, 'about.founderRole')}</p>
+          <p style="margin: 0; color: var(--color-ink-700);">{t(locale, 'about.founderBody')}</p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-block-start: 4px;">
+            <a class="azt-btn" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener">{t(locale, 'wa.label')}</a>
+            <a class="azt-btn azt-btn-ghost" href={locUrl(locale, 'gallery')}>{t(locale, 'about.cta')}</a>
+          </div>
+        </section>
+
+        <section>
+          <h2 style="font-size: 1.1rem;">{t(locale, 'about.statsTitle')}</h2>
+          <div class="azt-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-block-start: 16px;">
+            <div class="azt-card" style="padding: 20px;">
+              <p style="margin: 0; font-size: 0.8rem; color: var(--color-ink-500);">{t(locale, 'about.stats.location')}</p>
+              <p style="margin: 6px 0 0; font-weight: 600;">{t(locale, 'about.stats.locationValue')}</p>
+            </div>
+            <div class="azt-card" style="padding: 20px;">
+              <p style="margin: 0; font-size: 0.8rem; color: var(--color-ink-500);">{t(locale, 'about.stats.founded')}</p>
+              <p style="margin: 6px 0 0; font-weight: 600;"><span class="azt-mono azt-grade-c">{t(locale, 'common.tbd')}</span></p>
+            </div>
+            <div class="azt-card" style="padding: 20px;">
+              <p style="margin: 0; font-size: 0.8rem; color: var(--color-ink-500);">{t(locale, 'about.stats.grades')}</p>
+              <p style="margin: 6px 0 0; font-weight: 600;">{t(locale, 'about.stats.gradesValue')}</p>
+            </div>
+          </div>
+        </section>
+
+        <section style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <CertBadge label="OEKO-TEX" locale={locale} />
+          <CertBadge label="ISO 9001" locale={locale} />
+          <CertBadge label="GOTS" locale={locale} />
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  @media (max-width: 1024px) {
+    .azt-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

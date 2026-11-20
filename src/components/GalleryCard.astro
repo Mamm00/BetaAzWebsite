@@ -1,0 +1,30 @@
+---
+/**
+ * GalleryCard — image, caption, figure semantics (§14).
+ */
+import { Image } from 'astro:assets';
+import { media } from '../assets/media';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import type { GalleryImage } from '../lib/schema';
+
+export interface Props {
+  image: GalleryImage;
+  locale: Locale;
+  ratio?: string;
+}
+
+const { image, locale, ratio = '3 / 2' } = Astro.props;
+const url = media(image.src);
+---
+
+<figure class="azt-card" style="margin: 0; overflow: hidden;">
+  {url ? (
+    <Image src={url} alt={locale === 'ar' ? image.alt.ar : image.alt.en} width={1200} height={800} widths={[600, 900, 1200]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: ${ratio};" />
+  ) : (
+    <div style={`aspect-ratio: ${ratio}; background: var(--color-sand-200);`} />
+  )}
+  <figcaption style="padding: 12px 14px; font-size: 0.85rem; color: var(--color-ink-700);">
+    {locale === 'ar' ? image.caption.ar : image.caption.en}
+  </figcaption>
+</figure>

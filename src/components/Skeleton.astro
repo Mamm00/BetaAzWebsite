@@ -1,0 +1,19 @@
+---
+/**
+ * Skeleton — explicit size, shimmer, reduced-motion safe (§6.9).
+ */
+export interface Props {
+  ratio?: string;
+  width?: string;
+  label?: string;
+}
+
+const { ratio = '4 / 5', width = '100%', label = 'Loading' } = Astro.props;
+---
+
+<div
+  class="azt-skeleton"
+  role="status"
+  aria-label={label}
+  style={`aspect-ratio: ${ratio}; width: ${width}; border-radius: var(--azt-radius);`}
+/>

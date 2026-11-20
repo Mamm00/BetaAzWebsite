@@ -1,0 +1,36 @@
+---
+/**
+ * AdminPage.astro (§23–§27) — authed admin surface behind requireAdmin().
+ * The gate runs client-side on mount; unauthenticated users see the curtain.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/url';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AdminApp from '../components/admin/AdminApp.tsx';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const next = Astro.url.pathname;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t(locale, 'admin.shell')} · ${t(locale, 'nav.home')}`}
+  description={t(locale, 'admin.shell')}
+  path="admin"
+>
+  <div class="azt-container" style="padding-block: 40px 96px;">
+    <Breadcrumb locale={locale} crumbs={[{ label: locale === 'ar' ? 'الرئيسية' : 'Home', href: '' }, { label: t(locale, 'admin.shell') }]} />
+    <h1 style="margin: 0 0 4px;">{t(locale, 'admin.shell')}</h1>
+    <p style="color: var(--color-ink-500); margin-top: 0;">
+      {locale === 'ar' ? 'إدارة المحتوى: LIVE من JSON، المسوّدة محلياً، والنشر على GitHub.' : 'Content management: LIVE from JSON, drafts locally, publish via GitHub.'}
+    </p>
+    <div style="margin-block-start: 32px;">
+      <AdminApp locale={locale} next={next} client:load />
+    </div>
+  </div>
+</BaseLayout>

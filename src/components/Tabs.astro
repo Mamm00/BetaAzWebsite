@@ -1,0 +1,76 @@
+---
+/**
+ * Tabs — checkbox-based, no JS required, keyboard accessible.
+ * Radios first (hidden), tablist labels, then panels; CSS-only selection.
+ * Panels are read from named slots via Astro.slots.render()
+ * (the <slot name={dynamic}> element requires a static name, so we
+ * render the slot result directly instead).
+ */
+export interface TabItem {
+  id: string;
+  label: string;
+}
+
+export interface Props {
+  tabs: TabItem[];
+  initial?: string;
+}
+
+const { tabs, initial } = Astro.props;
+const first = initial ?? tabs[0]?.id ?? 'tab-0';
+
+const panels = await Promise.all(tabs.map((tab) => Astro.slots.render(tab.id)));
+---
+
+<div class="azt-tabs">
+  {tabs.map((tab, i) => (
+    <input
+      type="radio"
+      name="azt-tab"
+      id={`azt-tab-${tab.id}`}
+      checked={tab.id === first}
+      class="azt-visually-hidden"
+    />
+  ))}
+  <div role="tablist" class="azt-tablist" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; border-block-end: 1px solid var(--azt-hairline); margin-block-end: 24px;">
+    {tabs.map((tab) => (
+      <label for={`azt-tab-${tab.id}`} role="tab" class="azt-tab-label" style="padding: 12px 16px; cursor: pointer; border-block-end: 2px solid transparent; margin-block-end: -1px;">
+        {tab.label}
+      </label>
+    ))}
+  </div>
+  {tabs.map((tab, i) => (
+    <section role="tabpanel" data-tab={tab.id} class="azt-tabpanel">
+      {panels[i]}
+    </section>
+  ))}
+</div>
+
+<style is:global>
+  .azt-tabs .azt-tabpanel {
+    display: none;
+  }
+  .azt-tab-label {
+    transition: border-color var(--duration-micro) var(--ease-azt), color var(--duration-micro) var(--ease-azt);
+  }
+  {Astro.props.tabs.map((tab) => (
+    `
+    #azt-tab-${tab.id}:checked ~ .azt-tablist label[for="azt-tab-${tab.id}"] {
+      border-block-end-color: var(--color-ink-900);
+      font-weight: 600;
+      color: var(--color-ink-900);
+    }
+    #azt-tab-${tab.id}:checked ~ .azt-tabpanel[data-tab="${tab.id}"] {
+      display: block;
+    }
+    `
+  ))}
+  .azt-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>
