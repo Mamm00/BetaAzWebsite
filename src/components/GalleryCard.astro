@@ -20,7 +20,7 @@ const url = media(image.src);
 
 <figure class="azt-card" style="margin: 0; overflow: hidden;">
   {url ? (
-    <Image src={url} alt={locale === 'ar' ? image.alt.ar : image.alt.en} width={1200} height={800} widths={[600, 900, 1200]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: ${ratio};" />
+    <Image src={url} alt={locale === 'ar' ? image.alt.ar : image.alt.en} width={1200} height={800} widths={[600, 900, 1200]} sizes="(min-width: 900px) 33vw, 100vw" format="avif" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: ${ratio};" />
   ) : (
     <div style={`aspect-ratio: ${ratio}; background: var(--color-sand-200);`} />
   )}
