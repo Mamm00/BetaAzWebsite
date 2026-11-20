@@ -53,8 +53,48 @@ which **did not exist** → every social share had a broken image.
 2. Fix Squarespace DNS → A records to 185.199.108–111.153, CNAME www → mamm00.github.io
 3. Wait for DNS propagation, then verify live `alazhartex.com`
 
+## Cycle 4 — SVG weight collapse (CRUSHED)
+**Problem:** fabricArt generated hundreds of inline elements per schematic
+(net/lace ~320 circles, plain weave 26-40 rects), ×48 SVGs/page → HTML
+1.1MB/page, 31MB total.
+
+**Fixes:**
+- net/lace mesh → single `<pattern>` tile + fill rect
+- plain/satin/brocade weft → two-pick `<pattern>` tile
+- noise dots 90→22, tightened numeric formatting
+- **HTML 31MB → 16MB (−48%); dist 43MB → 28MB; lace page SVG elems 48→7**
+
+## Cycle 5 — Accessibility contrast (FIXED)
+**Problem:** gold (--color-giza) buttons used sand-50 light text at 2.13:1
+contrast — failing WCAG AA.
+
+**Fix:** Added `.azt-btn-giza` utility (ink-900 dark text on gold = 8.36:1,
+AA pass); applied to Provenance CTA + WhatsApp CTA.
+
+## Cycle 6 — SEO infrastructure (DONE)
+- @astrojs/sitemap: sitemap-index.xml + sitemap-0.xml, **185 public URLs**
+  (30 admin routes filtered out)
+- public/robots.txt pointing to sitemap
+
+## Verified clean
+- **Links:** 175 internal → 0 broken; external (WhatsApp, OSM, Google Fonts) all valid
+- **Alt text:** 297 images → 0 missing
+- **JSON-LD:** valid (Organization, LocalBusiness, Product, BreadcrumbList, single-slash URLs)
+- **Contrast:** ink-900/sand-50 = 17.8; giza-on-ink = 8.36; giza buttons now 8.36 (was 2.13)
+- **Page weights:** homepage 68K, gallery 36K, fabrics 380K, twin-studio 160K
+- **Client bundle:** NOT loaded on homepage (no module scripts — pure HTML+CSS)
+
+## Cycle 7 — SVG patterns verified
+- `<pattern>` elements render correctly in built SVGs (mesh44, weft tiles)
+- validate PASS, 0 broken links after pattern refactor
+
+## Open items (user-side, blocked)
+1. Switch Pages source → **GitHub Actions** (Settings → Pages) — still `legacy`
+2. Fix Squarespace DNS → A records to 185.199.108–111.153, CNAME www → mamm00.github.io
+3. DNS still does NOT resolve (alazhartex.com) — site cannot load until fixed
+
 ## Next targets
-- Validate JSON-LD structured data (Product, BreadcrumbList, LocalBusiness)
-- Accessibility: alt-text coverage, contrast ratios, keyboard nav
-- Lighthouse audit once live
-- Reduce AVIF build time (211s) — consider fewer widths or cached image service
+- LightRoom React island serves raw source JPGs (niche page; could pre-generate AVIF)
+- Consider web app manifest / PWA
+- Self-host fonts (blocked by sandbox egress — Google Fonts only)
+- Lighthouse audit once live on alazhartex.com
