@@ -1,14 +1,16 @@
 ---
 /**
- * Logo — Al Azhar Tex brand mark (§7).
- * A scalable SVG loom/diamond motif in the giza gold accent.
- * Uses currentColor for the mark so it adapts to light/dark surfaces;
- * the gold accent is fixed to the brand token. Reusable in Header + Hero.
+ * Logo — Al Azhar Tex brand mark.
+ * The brand mark is the operator-supplied PHOENIX logo, shipped as two
+ * transparent PNGs: a dark (navy + red) version for light surfaces and a
+ * recoloured light version for dark surfaces. The wordmark text sits
+ * beside the mark and adapts to the surface via the `tone` prop.
+ * Reusable in Header + Footer + Hero.
  */
 import { COMPANY } from '../data/company';
 
 export interface Props {
-  /** pixel size of the square mark */
+  /** pixel size (height) of the mark */
   size?: number;
   /** show the wordmark next to the mark */
   wordmark?: boolean;
@@ -23,33 +25,21 @@ const { size = 44, wordmark = true, tone = 'dark', showText = true } = Astro.pro
 const markColor = tone === 'light' ? 'var(--color-sand-50)' : 'var(--color-ink-900)';
 const accent = 'var(--color-giza)';
 const subColor = tone === 'light' ? 'rgba(247,243,236,0.7)' : 'var(--color-ink-500)';
+// pick the logo variant that contrasts with the surface
+const logoSrc = tone === 'light' ? '/logo-light.png' : '/logo.png';
+const logoAlt = `${COMPANY.name} logo`;
 ---
 
 <span
   class="azt-logo"
   style={`display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;`}
 >
-  <svg
-    width={size}
+  <img
+    src={logoSrc}
+    alt={logoAlt}
     height={size}
-    viewBox="0 0 64 64"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    role="img"
-    aria-label={COMPANY.name}
-  >
-    <!-- Loom / woven diamond motif -->
-    <rect x="2" y="2" width="60" height="60" rx="6" stroke={accent} stroke-width="1.5" opacity="0.55" />
-    <!-- outer diamond -->
-    <path d="M32 8 L56 32 L32 56 L8 32 Z" stroke={markColor} stroke-width="2" fill="none" />
-    <!-- inner diamond -->
-    <path d="M32 18 L46 32 L32 46 L18 32 Z" stroke={accent} stroke-width="2" fill="none" />
-    <!-- weave cross lines -->
-    <path d="M18 32 L46 32" stroke={markColor} stroke-width="1.4" opacity="0.7" />
-    <path d="M32 18 L32 46" stroke={markColor} stroke-width="1.4" opacity="0.7" />
-    <!-- center node -->
-    <circle cx="32" cy="32" r="3" fill={accent} />
-  </svg>
+    style={`display: block; height: ${size}px; width: auto; max-width: 100%; object-fit: contain;`}
+  />
   {wordmark && showText && (
     <span class="azt-logo-text" style="display: flex; flex-direction: column; line-height: 1;">
       <span
@@ -68,5 +58,9 @@ const subColor = tone === 'light' ? 'rgba(247,243,236,0.7)' : 'var(--color-ink-5
   .azt-logo {
     display: inline-flex;
     align-items: center;
+  }
+  .azt-logo img {
+    height: var(--azt-logo-size, 44px);
+    width: auto;
   }
 </style>
