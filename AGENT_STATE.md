@@ -110,7 +110,9 @@ structure (womens-apparel, shirting, jersey-knit, lace-tulle, home-textiles, lin
 
 **Results:** tsc clean; validate PASS (68 records, 6 collections, 2 locales);
 build 205 pages (4 category pages, down from 14); **0 broken links** (8,374 checked);
-old slugs fully purged from `dist/`.
+old slugs fully purged from `dist/`. **Vercel redeployed** to production
+(`dpl_6jJu4dcvRpcHuEvpA6hE6z16bEVn`, commit `c59e8f4`, PROMOTED); both
+`/en/categories/womens-fabrics/` and `/en/categories/mens-fabrics/` verified live.
 
 ## Open items (user-side, blocked)
 1. Switch Pages source → **GitHub Actions** (Settings → Pages) — still `legacy`
