@@ -1,86 +1,26 @@
 [
   {
-    "id": "womens-apparel",
-    "slug": "womens-apparel",
+    "id": "womens-fabrics",
+    "slug": "womens-fabrics",
     "name": {
-      "ar": "أقمشة نسائية",
-      "en": "Women's apparel"
+      "ar": "الأقمشة النسائية",
+      "en": "Women's Fabrics"
     },
     "description": {
-      "ar": "خط أساسي: شيفون، كريب، ساتان، فيسكوز وفوال قطني.",
-      "en": "خط أساسي: شيفون، كريب، ساتان، فيسكوز وفوال قطني."
+      "ar": "كل أنواع الأقمشة النسائية المعروفة: شيفون، جورجيت، كريب، ساتان، فوال، دانتيل، تول، بروكيد جاكاردا، وفيسكوز. تُستخدم في الفساتين، البلوز، التنانير، القمصان النسائية، المسبوكات والفراش.",
+      "en": "All known women's fabric types: Chiffon, Georgette, Crepe, Satin, Voile, Lace, Tulle, Jacquard Brocade, and Viscose. Used for dresses, blouses, skirts, women's shirts, lingerie and veils."
     }
   },
   {
-    "id": "shirting",
-    "slug": "shirting",
+    "id": "mens-fabrics",
+    "slug": "mens-fabrics",
     "name": {
-      "ar": "Shirting",
-      "en": "Shirting"
+      "ar": "الأقمشة الرجالية",
+      "en": "Men's Fabrics"
     },
     "description": {
-      "ar": "بوبلين، أوكسفورد، تويل وShirting مخطط للملابس الرجالية.",
-      "en": "بوبلين، أوكسفورد، تويل وShirting مخطط للملابس الرجالية."
-    }
-  },
-  {
-    "id": "jersey-knit",
-    "slug": "jersey-knit",
-    "name": {
-      "ar": "جيرسي نت",
-      "en": "Jersey & Knit"
-    },
-    "description": {
-      "ar": "جيرسي قطني لايكا، سينجل نت، سكبا والريب.",
-      "en": "جيرسي قطني لايكا، سينجل نت، سكبا والريب."
-    }
-  },
-  {
-    "id": "lace-tulle",
-    "slug": "lace-tulle",
-    "name": {
-      "ar": "دانتيل وتول",
-      "en": "Lace & Tulle"
-    },
-    "description": {
-      "ar": "دانتيل رايشل، تول، وغيبيري للمسبوكات والفراش.",
-      "en": "دانتيل رايشل، تول، وغيبيري للمسبوكات والفراش."
-    }
-  },
-  {
-    "id": "home-textiles",
-    "slug": "home-textiles",
-    "name": {
-      "ar": "منسوجات المنزل",
-      "en": "Home textiles"
-    },
-    "description": {
-      "ar": "ستائر، كتان مخلوط، تيكنغ وفراش.",
-      "en": "ستائر، كتان مخلوط، تيكنغ وفراش."
-    }
-  },
-  {
-    "id": "linings",
-    "slug": "linings",
-    "name": {
-      "ar": "البطانات",
-      "en": "Linings"
-    },
-    "description": {
-      "ar": "بطانات ساتان، تويل وفيسكوز للخياطة.",
-      "en": "بطانات ساتان، تويل وفيسكوز للخياطة."
-    }
-  },
-  {
-    "id": "surplus",
-    "slug": "surplus",
-    "name": {
-      "ar": "المخزون الزائد",
-      "en": "Surplus"
-    },
-    "description": {
-      "ar": "مخزون زائد وأطوال قصيرة — تصفية بكميات.",
-      "en": "مخزون زائد وأطوال قصيرة — تصفية بكميات."
+      "ar": "كل أنواع الأقمشة الرجالية المعروفة: بوبلين، تويل، جيرسي لايكا، سكبا، لينين مخلوط، كريب، وبطانات ساتان وتويل. تُستخدم في القمصان، البدل، التيشيرتات، البناطيل، والملابس الرياضية.",
+      "en": "All known men's fabric types: Poplin, Twill, Lycra Jersey, Scuba Knit, Linen Blend, Crepe, and Satin/Twill linings. Used for shirts, suits, t-shirts, trousers and sportswear."
     }
   }
 ]

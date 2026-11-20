@@ -25,11 +25,8 @@ export interface Props {
 const { locale } = Astro.props;
 
 const mosaicCats = [
-  categories.find((c) => c.slug === 'womens-apparel')!,
-  categories.find((c) => c.slug === 'shirting')!,
-  categories.find((c) => c.slug === 'jersey-knit')!,
-  categories.find((c) => c.slug === 'lace-tulle')!,
-  categories.find((c) => c.slug === 'home-textiles')!,
+  categories.find((c) => c.slug === 'womens-fabrics')!,
+  categories.find((c) => c.slug === 'mens-fabrics')!,
 ];
 
 const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? 'كريب جورجيت' : 'Crepe Georgette', grade: 'A', moq: 10 });
@@ -113,12 +110,12 @@ const waText = waTemplate('gradeA', { code: 'AZT-001', name: locale === 'ar' ? '
     <div class="azt-container">
       <h2>{t(locale, 'home.categoriesTitle')}</h2>
       <p style="color: var(--color-ink-700); margin-top: 8px;">{t(locale, 'home.categoriesBody')}</p>
-      <div class="azt-grid azt-split-4" style="grid-template-columns: repeat(4, 1fr); grid-template-rows: 260px 260px; gap: 16px; margin-block-start: 32px;">
-        {mosaicCats.map((c, i) => (
+      <div class="azt-grid azt-split-4" style="grid-template-columns: repeat(2, 1fr); grid-template-rows: 240px; gap: 16px; margin-block-start: 32px;">
+        {mosaicCats.map((c) => (
           <a
             class="azt-card"
             href={locUrl(locale, `categories/${c.slug}`)}
-            style={`grid-column: span 2; grid-row: span ${i === 0 ? 2 : 1}; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; text-decoration: none; color: inherit; background: var(--color-sand-${i === 0 ? '100' : '50'});`}
+            style="padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; text-decoration: none; color: inherit; background: var(--color-sand-50);"
           >
             <p class="azt-mono" style="margin: 0; font-size: 0.75rem; color: var(--color-ink-500);">{fabrics.filter((f) => f.category === c.slug).length} {t(locale, 'common.results_other')}</p>
             <h3 style="margin: 0;">{locale === 'ar' ? c.name.ar : c.name.en}</h3>
