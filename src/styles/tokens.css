@@ -1,31 +1,41 @@
 /* =============================================================
    AL AZHAR TEX — DESIGN SYSTEM TOKENS (§7)
-   Palette, type, grid, surfaces, motion. Components build to
-   these tokens only — no raw hex outside this file.
+   TJX-inspired identity: two main colors — BLUE + RED.
+   Bold, confident, value-driven off-price retail aesthetic.
+   Components build to these tokens only — no raw hex outside this file.
    ============================================================= */
 
 @import 'tailwindcss';
 
 /* ---------- Palette (semantic, Tailwind v4 theme mapping) ---------- */
 @theme {
-  /* ink — text and structure */
-  --color-ink-900: #0c0b09;
-  --color-ink-700: #2a2621;
-  --color-ink-500: #57503f;
+  /* ink — text and structure (cool neutral) */
+  --color-ink-900: #0f1623;
+  --color-ink-700: #364152;
+  --color-ink-500: #5b6678;
 
-  /* sand — surfaces and hairlines */
-  --color-sand-50: #f7f3ec;
-  --color-sand-100: #ede6d9;
-  --color-sand-200: #ded2bd;
-  --color-sand-300: #cfc3ac;
-  --color-sand-500: #9a8f74;
+  /* surfaces — clean retail neutral (cool white → light gray) */
+  --color-sand-50: #ffffff;
+  --color-sand-100: #f4f6fa;
+  --color-sand-200: #e6eaf2;
+  --color-sand-300: #cdd5e3;
+  --color-sand-500: #9aa6ba;
 
-  /* accents — grade system + brand */
-  --color-giza: #c8a45c;
-  --color-giza-dark: #a8863e;
-  --color-indigo: #1e3050;
-  --color-madder: #8c3b2e;
-  --color-ok: #3f6b4a;
+  /* ---- THE TWO MAIN COLORS: BLUE + RED ---- */
+  /* red — primary brand / action color (TJX-style vivid red) */
+  --color-giza: #c8102e;
+  --color-giza-dark: #a30c24;
+  --color-giza-soft: #fde8ec;
+
+  /* blue — secondary brand / structural color (Atlantic blue) */
+  --color-indigo: #1c3664;
+  --color-indigo-dark: #15294d;
+  --color-indigo-soft: #e4ebf6;
+
+  /* grade system: A = blue, B = amber, C = red */
+  --color-ok: #1c3664;        /* grade A — premium blue */
+  --color-amber: #b45309;     /* grade B — value amber */
+  --color-madder: #c8102e;    /* grade C — clearance red */
 
   /* type families */
   --font-naskh: 'Noto Naskh Arabic', 'Segoe UI', serif;
@@ -43,7 +53,7 @@
 /* ---------- Base ---------- */
 :root {
   --azt-hairline: var(--color-sand-300);
-  --azt-radius: 2px;
+  --azt-radius: 3px;
   --azt-swatch-radius: 4px;
   --azt-gutter: 24px;
   --azt-maxw: 1440px;
@@ -67,7 +77,7 @@ html {
 }
 
 body {
-  background: var(--color-sand-50);
+  background: var(--color-sand-100);
   color: var(--color-ink-900);
   font-family: var(--font-arabic);
   font-size: 17px;
@@ -107,7 +117,7 @@ body {
 
 h1 {
   font-size: clamp(2.4rem, 6.5vw, 6rem);
-  line-height: 1.15;
+  line-height: 1.1;
   margin-block: 0 0.4em;
 }
 
@@ -164,7 +174,7 @@ p {
 
 /* ---------- Focus: :focus-visible only (§6.7) ---------- */
 :focus-visible {
-  outline: 2px solid var(--color-ink-900);
+  outline: 2px solid var(--color-giza);
   outline-offset: 2px;
 }
 
@@ -204,16 +214,20 @@ p {
   }
 }
 
-/* ---------- Surfaces / cards ---------- */
+/* ---------- Surfaces / cards (TJX-style: clean, bold, hairline) ---------- */
 .azt-card {
   background: var(--color-sand-50);
   border: 1px solid var(--azt-hairline);
   border-radius: var(--azt-radius);
-  transition: transform var(--duration-micro) var(--ease-azt);
+  transition: transform var(--duration-micro) var(--ease-azt),
+    box-shadow var(--duration-micro) var(--ease-azt),
+    border-color var(--duration-micro) var(--ease-azt);
 }
 
 .azt-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -12px rgb(28 54 100 / 18%);
+  border-color: var(--color-indigo);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -231,58 +245,68 @@ p {
   padding: 10px 12px;
   font: inherit;
   color: inherit;
-  box-shadow: inset 0 1px 2px rgb(12 11 9 / 4%);
+  box-shadow: inset 0 1px 2px rgb(15 22 35 / 4%);
 }
 
 .azt-input:focus-visible {
-  outline: 2px solid var(--color-ink-900);
+  outline: 2px solid var(--color-giza);
   outline-offset: 1px;
+  border-color: var(--color-giza);
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons (TJX-style: bold red primary, blue secondary) ---------- */
 .azt-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   min-height: 44px;
-  padding: 10px 20px;
-  border: 1px solid var(--color-ink-900);
+  padding: 10px 22px;
+  border: 2px solid var(--color-giza);
   border-radius: var(--azt-radius);
-  background: var(--color-ink-900);
+  background: var(--color-giza);
   color: var(--color-sand-50);
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: opacity var(--duration-micro) var(--ease-azt);
+  transition: background var(--duration-micro) var(--ease-azt),
+    border-color var(--duration-micro) var(--ease-azt),
+    transform var(--duration-micro) var(--ease-azt);
 }
 
 .azt-btn:hover {
-  opacity: 0.88;
+  background: var(--color-giza-dark);
+  border-color: var(--color-giza-dark);
+  transform: translateY(-1px);
+}
+
+.azt-btn:active {
+  transform: translateY(0);
 }
 
 .azt-btn-ghost {
   background: transparent;
-  color: var(--color-ink-900);
+  color: var(--color-indigo);
+  border-color: var(--color-indigo);
 }
 
 .azt-btn-ghost:hover {
-  background: var(--color-sand-100);
-  opacity: 1;
+  background: var(--color-indigo-soft);
+  color: var(--color-indigo-dark);
+  border-color: var(--color-indigo-dark);
 }
 
-/* Gold accent button — dark ink text on gold (contrast 8.36:1, AA pass).
-   Light text on gold only reaches 2.13:1, which fails WCAG AA. */
-.azt-btn-giza {
-  background: var(--color-giza);
-  border-color: var(--color-giza);
-  color: var(--color-ink-900);
+/* Blue accent button — solid blue for secondary emphasis */
+.azt-btn-blue {
+  background: var(--color-indigo);
+  border-color: var(--color-indigo);
+  color: var(--color-sand-50);
 }
 
-.azt-btn-giza:hover {
-  background: var(--color-giza-dark);
-  border-color: var(--color-giza-dark);
-  opacity: 1;
+.azt-btn-blue:hover {
+  background: var(--color-indigo-dark);
+  border-color: var(--color-indigo-dark);
 }
 
 /* ---------- Chips ---------- */
@@ -297,28 +321,28 @@ p {
   background: var(--color-sand-50);
 }
 
-/* Grade accents via accent only — never traffic-light cliché */
+/* Grade accents — A blue, B amber, C red */
 .azt-grade-a {
   color: var(--color-ok);
 }
 .azt-grade-b {
-  color: var(--color-indigo);
+  color: var(--color-amber);
 }
 .azt-grade-c {
   color: var(--color-madder);
 }
 
 .azt-grade-a-bg {
-  background: color-mix(in srgb, var(--color-ok) 10%, var(--color-sand-50));
-  border-color: color-mix(in srgb, var(--color-ok) 35%, var(--color-sand-300));
+  background: var(--color-indigo-soft);
+  border-color: color-mix(in srgb, var(--color-ok) 40%, var(--color-sand-300));
 }
 .azt-grade-b-bg {
-  background: color-mix(in srgb, var(--color-indigo) 10%, var(--color-sand-50));
-  border-color: color-mix(in srgb, var(--color-indigo) 35%, var(--color-sand-300));
+  background: color-mix(in srgb, var(--color-amber) 12%, var(--color-sand-50));
+  border-color: color-mix(in srgb, var(--color-amber) 40%, var(--color-sand-300));
 }
 .azt-grade-c-bg {
-  background: color-mix(in srgb, var(--color-madder) 10%, var(--color-sand-50));
-  border-color: color-mix(in srgb, var(--color-madder) 35%, var(--color-sand-300));
+  background: var(--color-giza-soft);
+  border-color: color-mix(in srgb, var(--color-madder) 40%, var(--color-sand-300));
 }
 
 /* ---------- Skeleton / empty ---------- */
@@ -355,9 +379,10 @@ p {
   inset-inline-start: 16px;
   z-index: 1000;
   padding: 10px 16px;
-  background: var(--color-ink-900);
+  background: var(--color-giza);
   color: var(--color-sand-50);
   border-radius: var(--azt-radius);
+  font-weight: 700;
 }
 
 .azt-skip:focus {

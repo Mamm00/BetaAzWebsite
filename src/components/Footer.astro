@@ -1,6 +1,7 @@
 ---
 /**
- * Footer — contact, quick links, locale toggle, discreet admin link (§9).
+ * Footer — TJX-style: bold blue band, red accents, confident links.
+ * Contact, quick links, locale toggle, discreet admin link.
  */
 import { COMPANY } from '../data/company';
 import { locUrl, type Locale } from '../lib/url';
@@ -18,42 +19,48 @@ const { locale, path = '' } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="azt-footer azt-hairline-t" style="background: var(--color-sand-100); margin-block-start: 80px;">
+<footer class="azt-footer" style="background: var(--color-indigo); color: var(--color-sand-50); margin-block-start: 80px;">
   <div class="azt-container" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-block: 56px 32px;">
     <div>
-      <Logo size={40} wordmark={true} tone="dark" />
-      <p style="margin-block-start: 12px; color: var(--color-ink-700); max-width: 46ch;">{t(locale, 'home.footerAbout')}</p>
-      <p class="azt-mono" style="margin-block-start: 12px; font-size: 0.8rem; color: var(--color-ink-500);">{COMPANY.addressEn}</p>
+      <Logo size={40} wordmark={true} tone="light" />
+      <p style="margin-block-start: 12px; color: rgba(255,255,255,0.78); max-width: 46ch;">{t(locale, 'home.footerAbout')}</p>
+      <p class="azt-mono" style="margin-block-start: 12px; font-size: 0.8rem; color: rgba(255,255,255,0.6);">{COMPANY.addressEn}</p>
     </div>
 
     <nav aria-label={t(locale, 'footer.quickLinks')}>
-      <h2 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em;">{t(locale, 'footer.quickLinks')}</h2>
-      <ul style="list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px;">
-        <li><a href={locUrl(locale, 'fabrics')} style="color: inherit; text-decoration: none;">{t(locale, 'nav.fabrics')}</a></li>
-        <li><a href={locUrl(locale, 'grades')} style="color: inherit; text-decoration: none;">{t(locale, 'nav.grades')}</a></li>
-        <li><a href={locUrl(locale, 'gallery')} style="color: inherit; text-decoration: none;">{t(locale, 'nav.gallery')}</a></li>
-        <li><a href={locUrl(locale, 'wholesale')} style="color: inherit; text-decoration: none;">{t(locale, 'nav.wholesale')}</a></li>
-        <li><a href={locUrl(locale, 'journal')} style="color: inherit; text-decoration: none;">{t(locale, 'nav.journal')}</a></li>
+      <h2 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-giza); margin: 0;">{t(locale, 'footer.quickLinks')}</h2>
+      <ul style="list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px;">
+        <li><a href={locUrl(locale, 'fabrics')} style="color: rgba(255,255,255,0.85); text-decoration: none; transition: color var(--duration-micro) var(--ease-azt);">{t(locale, 'nav.fabrics')}</a></li>
+        <li><a href={locUrl(locale, 'grades')} style="color: rgba(255,255,255,0.85); text-decoration: none; transition: color var(--duration-micro) var(--ease-azt);">{t(locale, 'nav.grades')}</a></li>
+        <li><a href={locUrl(locale, 'gallery')} style="color: rgba(255,255,255,0.85); text-decoration: none; transition: color var(--duration-micro) var(--ease-azt);">{t(locale, 'nav.gallery')}</a></li>
+        <li><a href={locUrl(locale, 'wholesale')} style="color: rgba(255,255,255,0.85); text-decoration: none; transition: color var(--duration-micro) var(--ease-azt);">{t(locale, 'nav.wholesale')}</a></li>
+        <li><a href={locUrl(locale, 'journal')} style="color: rgba(255,255,255,0.85); text-decoration: none; transition: color var(--duration-micro) var(--ease-azt);">{t(locale, 'nav.journal')}</a></li>
       </ul>
     </nav>
 
     <div>
-      <h2 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em;">{t(locale, 'footer.contact')}</h2>
-      <ul style="list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px;">
-        <li><a href={`tel:${COMPANY.phone1}`} style="color: inherit; text-decoration: none;">{COMPANY.phone1Display}</a></li>
-        <li><a href={`tel:${COMPANY.phone2}`} style="color: inherit; text-decoration: none;">{COMPANY.phone2Display}</a></li>
-        <li><a href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener" style="color: var(--color-ok);">{t(locale, 'wa.label')}</a></li>
+      <h2 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-giza); margin: 0;">{t(locale, 'footer.contact')}</h2>
+      <ul style="list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px;">
+        <li><a href={`tel:${COMPANY.phone1}`} style="color: rgba(255,255,255,0.85); text-decoration: none; transition: color var(--duration-micro) var(--ease-azt);">{COMPANY.phone1Display}</a></li>
+        <li><a href={`tel:${COMPANY.phone2}`} style="color: rgba(255,255,255,0.85); text-decoration: none; transition: color var(--duration-micro) var(--ease-azt);">{COMPANY.phone2Display}</a></li>
+        <li><a href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener" style="color: var(--color-giza); font-weight: 600;">{t(locale, 'wa.label')}</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="azt-container" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 20px; border-block-start: 1px solid var(--azt-hairline);">
-    <p style="margin: 0; font-size: 0.82rem; color: var(--color-ink-500);">
+  <div class="azt-container" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 20px; border-block-start: 1px solid rgba(255,255,255,0.18);">
+    <p style="margin: 0; font-size: 0.82rem; color: rgba(255,255,255,0.62);">
       © {year} {COMPANY.name} · {t(locale, 'footer.rights')} · {t(locale, 'footer.madeIn')}
     </p>
     <div style="display: flex; align-items: center; gap: 12px;">
       <LangToggle locale={locale} path={path} variant="compact" />
-      <a href={locUrl(locale, 'admin')} style="font-size: 0.82rem; color: var(--color-ink-500); text-decoration: none; border-block: 1px solid var(--azt-hairline); padding: 4px 10px; border-radius: var(--azt-radius);">{t(locale, 'footer.admin')}</a>
+      <a href={locUrl(locale, 'admin')} style="font-size: 0.82rem; color: rgba(255,255,255,0.62); text-decoration: none; border-block: 1px solid rgba(255,255,255,0.25); padding: 4px 10px; border-radius: var(--azt-radius);">{t(locale, 'footer.admin')}</a>
     </div>
   </div>
 </footer>
+
+<style>
+  .azt-footer a:hover {
+    color: var(--color-giza) !important;
+  }
+</style>

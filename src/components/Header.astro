@@ -1,6 +1,7 @@
 ---
 /**
- * Header — brand wordmark, nav, right rail (§9).
+ * Header — TJX-style brand bar: bold wordmark, confident nav, strong CTAs.
+ * Red primary action color, blue secondary. Sticky, hairline-bordered.
  * Nav: Fabrics · Grades · Categories · Gallery · Wholesale · Contact.
  * Right rail: Match icon, language toggle, sample count, WhatsApp.
  */
@@ -29,35 +30,35 @@ const navItems = [
 ---
 
 <header class="azt-header azt-hairline-b" style="position: sticky; inset-block-start: 0; z-index: 50; background: var(--color-sand-50);">
-  <div class="azt-container" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; flex-wrap: wrap;">
+  <div class="azt-container" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; flex-wrap: wrap;">
     <a href={locUrl(locale, '')} class="azt-brand" aria-label={locale === 'ar' ? COMPANY.nameAr : COMPANY.name} style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-      <Logo size={36} wordmark={true} tone="dark" />
+      <Logo size={40} wordmark={true} tone="dark" />
     </a>
 
-    <nav aria-label="Primary" class="azt-nav-desktop" style="display: flex; align-items: center; gap: 4px;">
+    <nav aria-label="Primary" class="azt-nav-desktop" style="display: flex; align-items: center; gap: 2px;">
       {navItems.map((item) => (
-        <a href={locUrl(locale, item.href)} class="azt-nav-link" style="padding: 8px 12px; font-size: 0.95rem; text-decoration: none; color: inherit; border-radius: var(--azt-radius);">
+        <a href={locUrl(locale, item.href)} class="azt-nav-link" style="padding: 10px 14px; font-size: 0.92rem; font-weight: 600; text-decoration: none; color: var(--color-ink-700); border-radius: var(--azt-radius); transition: color var(--duration-micro) var(--ease-azt), background var(--duration-micro) var(--ease-azt);">
           {t(locale, item.key)}
         </a>
       ))}
       <details class="azt-nav-cats" style="position: relative;">
-        <summary style="list-style: none; cursor: pointer; padding: 8px 12px; font-size: 0.95rem; border-radius: var(--azt-radius);">{t(locale, 'nav.categories')}</summary>
-        <div class="azt-card azt-dropdown" style="position: absolute; inset-block-start: 100%; inset-inline-end: 0; min-width: 220px; padding: 8px; display: none;">
+        <summary style="list-style: none; cursor: pointer; padding: 10px 14px; font-size: 0.92rem; font-weight: 600; color: var(--color-ink-700); border-radius: var(--azt-radius);">{t(locale, 'nav.categories')}</summary>
+        <div class="azt-card azt-dropdown" style="position: absolute; inset-block-start: 100%; inset-inline-end: 0; min-width: 220px; padding: 8px; display: none; z-index: 60;">
           <style is:global>.azt-nav-cats[open] .azt-dropdown { display: block; }</style>
           <div class="azt-cat-grid">
-            <a href={locUrl(locale, 'categories/womens-fabrics')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.womensFabrics')}</a>
-            <a href={locUrl(locale, 'categories/mens-fabrics')} style="display: block; padding: 6px 10px; text-decoration: none; color: inherit;">{t(locale, 'nav.mensFabrics')}</a>
+            <a href={locUrl(locale, 'categories/womens-fabrics')} style="display: block; padding: 8px 10px; text-decoration: none; color: var(--color-ink-900); border-radius: var(--azt-radius);">{t(locale, 'nav.womensFabrics')}</a>
+            <a href={locUrl(locale, 'categories/mens-fabrics')} style="display: block; padding: 8px 10px; text-decoration: none; color: var(--color-ink-900); border-radius: var(--azt-radius);">{t(locale, 'nav.mensFabrics')}</a>
           </div>
         </div>
       </details>
     </nav>
 
     <div class="azt-header-rail" style="display: flex; align-items: center; gap: 10px;">
-      <a href={locUrl(locale, 'match')} aria-label={t(locale, 'match.title')} style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--azt-hairline); border-radius: var(--azt-radius); color: inherit; text-decoration: none;" title={t(locale, 'match.title')}>
+      <a href={locUrl(locale, 'match')} aria-label={t(locale, 'match.title')} style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--azt-hairline); border-radius: var(--azt-radius); color: var(--color-indigo); text-decoration: none;" title={t(locale, 'match.title')}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       </a>
       <LangToggle locale={locale} path={path} />
-      <a class="azt-btn" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">
+      <a class="azt-btn" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener" style="min-height: 40px; padding: 6px 16px; font-size: 0.85rem;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8 8 0 1 1 12 20Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.6-.2-1.3-.5-1.9-.9-.4-.2-.8-.5-1.2-.8-.1-.1-.3-.2-.5-.1-.2.1-.4.2-.5.3-.2.2-.7.7-.9 1-.1.2 0 .4 0 .5l.6 1.8c.2.6.8 1.2 1.2 1.5.1.1.2.2.3.2.1 0 .2 0 .3-.1l.7-.8c.2-.2.4-.2.5-.1.2.1.3.2.4.3l.2.3c.1.1.1.2.2.3 0 .1-.1.2-.1.3l-.3.8c-.1.2-.1.4 0 .5l.3.6c.1.1.2.2.2.3 0 .1-.1.2-.1.3-.1.2-.2.4-.1.6l.1.3c0 .1.1.2.2.2h.2c.1 0 .2 0 .2-.1l.5-.6c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.1.5 0 .1-.1.2-.2.3-.3l.8-.7c.2-.2.3-.2.5-.1.2.1.3.2.4.4l.3.5c.1.2.1.4 0 .5l-.3.8c-.1.2-.2.3-.4.4-.1.1-.3.1-.5 0l-.8-.5c-.2-.1-.4-.1-.6 0Z"/></svg>
         {t(locale, 'wa.label')}
       </a>
@@ -72,26 +73,28 @@ const navItems = [
     </label>
     <nav aria-label="Primary mobile" class="azt-nav-mobile-menu">
       {navItems.map((item) => (
-        <a href={locUrl(locale, item.href)} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, item.key)}</a>
+        <a href={locUrl(locale, item.href)} style="padding: 12px 4px; text-decoration: none; color: var(--color-ink-900); font-weight: 600; border-block-start: 1px solid var(--azt-hairline);">{t(locale, item.key)}</a>
       ))}
-      <a href={locUrl(locale, 'categories/womens-fabrics')} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.womensFabrics')}</a>
-      <a href={locUrl(locale, 'trade-desk')} style="padding: 12px 4px; text-decoration: none; color: inherit; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.tradeDesk')}</a>
+      <a href={locUrl(locale, 'categories/womens-fabrics')} style="padding: 12px 4px; text-decoration: none; color: var(--color-ink-900); font-weight: 600; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.womensFabrics')}</a>
+      <a href={locUrl(locale, 'trade-desk')} style="padding: 12px 4px; text-decoration: none; color: var(--color-ink-900); font-weight: 600; border-block-start: 1px solid var(--azt-hairline);">{t(locale, 'nav.tradeDesk')}</a>
     </nav>
   </div>
 </header>
 
 <style>
   .azt-brand:hover {
-    opacity: 0.75;
+    opacity: 0.8;
   }
   .azt-nav-link:hover {
-    background: var(--color-sand-100);
+    color: var(--color-giza);
+    background: var(--color-giza-soft);
   }
   .azt-nav-cats summary::-webkit-details-marker {
     display: none;
   }
   .azt-nav-cats summary:hover {
-    background: var(--color-sand-100);
+    color: var(--color-giza);
+    background: var(--color-giza-soft);
     border-radius: var(--azt-radius);
   }
   .azt-cat-grid {
@@ -100,7 +103,7 @@ const navItems = [
     gap: 2px;
   }
   .azt-cat-grid a:hover {
-    background: var(--color-sand-100);
+    background: var(--color-indigo-soft);
   }
   .azt-visually-hidden {
     position: absolute;
@@ -119,6 +122,7 @@ const navItems = [
     cursor: pointer;
     border: 1px solid var(--azt-hairline);
     border-radius: var(--azt-radius);
+    color: var(--color-ink-900);
   }
   .azt-nav-mobile-menu {
     display: none;

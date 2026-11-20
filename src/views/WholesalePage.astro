@@ -42,12 +42,12 @@ const benefits = [
       ))}
     </div>
 
-    <section class="azt-cv" style={`margin-block-top: 48px; padding: clamp(28px, 4vw, 48px); background: var(--color-ink-900); color: var(--color-sand-50); border-radius: var(--azt-radius); display: flex; flex-direction: column; gap: 20px; align-items: flex-start;`}>
+    <section class="azt-cv" style={`margin-block-top: 48px; padding: clamp(28px, 4vw, 48px); background: var(--color-indigo-dark); color: var(--color-sand-50); border-radius: var(--azt-radius); display: flex; flex-direction: column; gap: 20px; align-items: flex-start;`}>
       <h2 style={`margin: 0; color: var(--color-sand-50);`}>{t(locale, 'wholesale.cta')}</h2>
-      <p style={`margin: 0; color: rgba(247, 243, 236, 0.85); max-width: 60ch;`}>{t(locale, 'wholesale.moqNote')}</p>
+      <p style={`margin: 0; color: rgba(255, 255, 255, 0.85); max-width: 60ch;`}>{t(locale, 'wholesale.moqNote')}</p>
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a class="azt-btn azt-btn-giza" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener">{t(locale, 'wa.label')}</a>
-        <a class="azt-btn azt-btn-ghost" style="color: var(--color-sand-50); border-color: var(--color-sand-50);" href={locUrl(locale, 'contact')}>{t(locale, 'nav.contact')}</a>
+        <a class="azt-btn" href={waLink(t(locale, 'wa.generic'))} target="_blank" rel="noopener">{t(locale, 'wa.label')}</a>
+        <a class="azt-btn azt-btn-blue" href={locUrl(locale, 'contact')}>{t(locale, 'nav.contact')}</a>
       </div>
     </section>
 
