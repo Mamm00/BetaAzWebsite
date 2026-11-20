@@ -25,8 +25,10 @@ const { size = 44, wordmark = true, tone = 'dark', showText = true } = Astro.pro
 const markColor = tone === 'light' ? 'var(--color-sand-50)' : 'var(--color-ink-900)';
 const accent = 'var(--color-giza)';
 const subColor = tone === 'light' ? 'rgba(247,243,236,0.7)' : 'var(--color-ink-500)';
-// pick the logo variant that contrasts with the surface
-const logoSrc = tone === 'light' ? '/logo-light.png' : '/logo.png';
+// pick the logo variant that contrasts with the surface (prefixed with base)
+const logoSrc = tone === 'light'
+  ? `${import.meta.env.BASE_URL}logo-light.png`
+  : `${import.meta.env.BASE_URL}logo.png`;
 const logoAlt = `${COMPANY.name} logo`;
 ---
 
