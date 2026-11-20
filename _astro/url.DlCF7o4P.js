@@ -1,0 +1,1 @@
+function t(e){const r="/BetaAzWebsite/",n=e===""||e==="/"?"":e.replace(/^\/+/,"").replace(/\/+$/,""),c=r.replace(/\/+$/,""),a=n===""?"":`/${n}`;return`${c}${a}/`}function s(e,r){return t(e==="ar"&&r===""?"":`${e}${r?`/${r.replace(/^\/+|\/+$/g,"")}`:""}`)}export{s as l};

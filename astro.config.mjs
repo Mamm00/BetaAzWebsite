@@ -4,11 +4,12 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Dual deploy target: GitHub Pages subpath AND root domain from one config.
-// AZT_BASE=/al-azhar-tex/ for Pages; default '/' for the root domain.
+// GitHub Pages project-site deployment (CNAME removed → served at the
+// github.io subpath). base must match the subpath so internal links resolve.
+// Override with AZT_BASE if serving from a root/custom domain instead.
 export default defineConfig({
-  site: 'https://alazhartex.com',
-  base: process.env.AZT_BASE || '/',
+  site: 'https://mamm00.github.io',
+  base: process.env.AZT_BASE || '/BetaAzWebsite/',
   trailingSlash: 'always',
   build: {
     format: 'directory',

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://mamm00.github.io/BetaAzWebsite/sitemap-index.xml

@@ -1,0 +1,1 @@
+const a={whatsapp:["+201003600949","+201201754177"],admin:{username:"admin",passwordHash:"8a344ad4ddecaab0444ec101fff2a422dd14f8cbd9557adbdbd66ffc6f6b3ac2"}},e=Object.freeze(Object.defineProperty({__proto__:null},Symbol.toStringTag,{value:"Module"}));export{a as C,e as _};

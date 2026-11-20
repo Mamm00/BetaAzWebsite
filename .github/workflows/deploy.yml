@@ -1,9 +1,10 @@
-name: Deploy — dual host
+name: CI
 
-# Deploy to GitHub Pages with custom domain (§28).
-# Builds with AZT_BASE=/ so internal links are root-relative and work at
-# the custom domain alazhartex.com. The CNAME file (alazhartex.com) is kept
-# so GitHub Pages serves the site at the custom domain root.
+# Build + validate the Astro site. The deployable static files (root index.html
+# + assets) are committed to `main` and served by GitHub Pages' legacy builder
+# (source: branch main, path /). No deploy-pages action is used, so there are
+# no Pages-source errors. Rebuild + re-commit the built files to root when
+# content changes (see AGENT_STATE.md).
 
 on:
   push:
@@ -12,11 +13,9 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -41,22 +40,15 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit
 
-      - name: Build (AZT_BASE=/)
-        run: AZT_BASE=/ npm run build
+      - name: Build (base = GitHub Pages subpath)
+        run: AZT_BASE=/BetaAzWebsite/ npm run build
 
-      - uses: actions/configure-pages@v5
+      - name: Verify root index.html emitted
+        run: test -f dist/index.html
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: dist
           path: dist
-
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          retention-days: 7
