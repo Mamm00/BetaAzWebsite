@@ -106,30 +106,33 @@ export function fabricArt(opts: FabricArtOpts): string {
   );
 
   if (kind === 'net' || kind === 'lace') {
-    // Open net / raschel lace: mesh of nodes with random drops.
-    const step = kind === 'net' ? 26 : 34;
-    for (let y = 0; y < h + step; y += step) {
-      for (let x = 0; x < w + step; x += step) {
-        const ox = (Math.floor(y / step) % 2) * (step / 2);
-        const px = x + ox;
-        const py = y;
-        const open = rnd() > (kind === 'net' ? 0.25 : 0.55);
-        if (open) {
-          parts.push(
-            `<circle cx="${px}" cy="${py}" r="${step * 0.28}" fill="${rgba(base, 0.12, -18)}"/>`,
-          );
-          continue;
-        }
-        const r = step * 0.3;
-        parts.push(
-          `<circle cx="${px}" cy="${py}" r="${r}" fill="none" stroke="${shade(base, -26)}" stroke-width="${step * 0.12}"/>`,
-        );
-        if (kind === 'lace' && rnd() > 0.6) {
-          parts.push(
-            `<circle cx="${px}" cy="${py}" r="${r * 0.45}" fill="${rgba(base, 0.5, 26)}"/>`,
-          );
-        }
-      }
+    // Open net / raschel lace: rendered as a repeating <pattern> tile
+    // (one ring per cell) instead of hundreds of inline <circle> elements —
+    // keeps inline SVG weight tiny across the many lace/net cards.
+    const step = kind === 'net' ? 30 : 38;
+    const r = step * 0.3;
+    const sw = (step * 0.12).toFixed(1);
+    const stroke = shade(base, -26);
+    const midFill = rgba(base, 0.5, 26);
+    const tileRnd = mulberry32((seed * 7919 + 13) >>> 0);
+    const cx = (step / 2).toFixed(1);
+    const tileParts: string[] = [
+      `<circle cx="${cx}" cy="${cx}" r="${r.toFixed(1)}" fill="none" stroke="${stroke}" stroke-width="${sw}"/>`,
+    ];
+    if (kind === 'lace' && tileRnd() > 0.4) {
+      tileParts.push(`<circle cx="${cx}" cy="${cx}" r="${(r * 0.45).toFixed(1)}" fill="${midFill}"/>`);
+    }
+    const meshId = `mesh${seed % 97}`;
+    parts.push(
+      `<defs><pattern id="${meshId}" width="${step}" height="${step}" patternUnits="userSpaceOnUse">${tileParts.join('')}</pattern></defs>`,
+    );
+    parts.push(`<rect width="${w}" height="${h}" fill="url(#${meshId})"/>`);
+    // A few open holes for visual variety (sparse, not a full grid).
+    const holes = 6;
+    for (let i = 0; i < holes; i++) {
+      const x = (rnd() * w).toFixed(0);
+      const y = (rnd() * h).toFixed(0);
+      parts.push(`<circle cx="${x}" cy="${y}" r="${(step * 0.28).toFixed(1)}" fill="${rgba(base, 0.12, -18)}"/>`);
     }
   } else if (kind === 'knit') {
     // Jersey / single knit: vertical loop columns.
@@ -153,13 +156,20 @@ export function fabricArt(opts: FabricArtOpts): string {
     // Plain / satin / brocade: warp × weft weave.
     const warps = kind === 'satin' ? 9 : 16;
     const wefts = kind === 'satin' ? 26 : 40;
-    // Weft stripes with alternating light/dark picks.
-    for (let i = 0; i < wefts; i++) {
-      const y = (i * h) / wefts;
-      const pick = i % 2 === 0 ? 0 : (kind === 'satin' ? 14 : -12);
-      const l = grade === 'C' ? -6 : 0;
-      parts.push(`<rect x="0" y="${y}" width="${w}" height="${h / wefts + 1}" fill="${shade(base, pick + l)}"/>`);
-    }
+    // Weft stripes with alternating light/dark picks — rendered as a
+    // repeating two-pick <pattern> tile instead of 26-40 inline rects.
+    const weftH = h / wefts;
+    const lShift = grade === 'C' ? -6 : 0;
+    const pickA = shade(base, lShift);
+    const pickB = shade(base, (kind === 'satin' ? 14 : -12) + lShift);
+    const weftId = `weft${seed % 97}`;
+    parts.push(
+      `<defs><pattern id="${weftId}" width="${w}" height="${(weftH * 2).toFixed(1)}" patternUnits="userSpaceOnUse">` +
+        `<rect x="0" y="0" width="${w}" height="${weftH.toFixed(1)}" fill="${pickA}"/>` +
+        `<rect x="0" y="${weftH.toFixed(1)}" width="${w}" height="${weftH.toFixed(1)}" fill="${pickB}"/>` +
+        `</pattern></defs>`,
+    );
+    parts.push(`<rect width="${w}" height="${h}" fill="url(#${weftId})"/>`);
     // Warp lines with a per-seed phase offset for satin floats.
     for (let j = 0; j < warps; j++) {
       const x = (j * w) / warps;
@@ -197,7 +207,7 @@ export function fabricArt(opts: FabricArtOpts): string {
       const dx = (rnd() - 0.5) * len;
       const dy = (rnd() - 0.5) * len * 0.18;
       parts.push(
-        `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${(x + dx).toFixed(1)}" y2="${(y + dy).toFixed(1)}" stroke="${rgba(base, grade === 'C' ? 0.55 : 0.3, -40)}" stroke-width="${2 + rnd() * 3}" opacity="0.7"/>`,
+        `<line x1="${x.toFixed(0)}" y1="${y.toFixed(0)}" x2="${(x + dx).toFixed(0)}" y2="${(y + dy).toFixed(0)}" stroke="${rgba(base, grade === 'C' ? 0.55 : 0.3, -40)}" stroke-width="${(2 + rnd() * 3).toFixed(0)}" opacity="0.7"/>`,
       );
     }
   }
@@ -208,7 +218,7 @@ export function fabricArt(opts: FabricArtOpts): string {
       const x = rnd() * w;
       const y = rnd() * h;
       parts.push(
-        `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${2 + rnd() * 3}" fill="${shade(base, -55)}" opacity="0.8"/>`,
+        `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(2 + rnd() * 3).toFixed(0)}" fill="${shade(base, -55)}" opacity="0.8"/>`,
       );
     }
     // Short-length edge marks — the lot was cut short.
@@ -220,13 +230,15 @@ export function fabricArt(opts: FabricArtOpts): string {
     );
   }
 
-  // Subtle noise dot field for texture.
-  const dots = 90;
+  // Subtle noise dot field for texture — kept sparse to limit inline SVG
+  // weight (each dot is a full <circle> element; 48+ SVGs/page multiply this).
+  const dots = 22;
   for (let d = 0; d < dots; d++) {
-    const x = rnd() * w;
-    const y = rnd() * h;
+    const x = (rnd() * w).toFixed(0);
+    const y = (rnd() * h).toFixed(0);
+    const r = (rnd() * 1.2).toFixed(1);
     parts.push(
-      `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(rnd() * 1.2).toFixed(2)}" fill="${rgba(base, 0.12, rnd() > 0.5 ? 14 : -14)}"/>`,
+      `<circle cx="${x}" cy="${y}" r="${r}" fill="${rgba(base, 0.12, rnd() > 0.5 ? 14 : -14)}"/>`,
     );
   }
 
