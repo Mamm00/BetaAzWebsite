@@ -382,7 +382,7 @@ the full 60-fabric matrix.
 
 `astro.config.mjs` reads `AZT_BASE`:
 - `AZT_BASE=/` (default) → root domain `alazhartex.com`.
-- `AZT_BASE=/al-azhar-tex/` → GitHub Pages subpath.
+- `AZT_BASE=/BetaAzWebsite/` → GitHub Pages serving path (`mamm00.github.io/BetaAzWebsite/`).
 
 **Step 8.1 — Custom domain build (default)**
 ```bash
@@ -394,7 +394,7 @@ AZT_BASE=/ npm run build
 
 **Step 8.2 — GitHub Pages subpath build**
 ```bash
-AZT_BASE=/al-azhar-tex/ npm run build
+AZT_BASE=/BetaAzWebsite/ npm run build
 ```
 - Push `dist/` to the `gh-pages` branch (or configure Pages to serve
   `dist/` from a deployment workflow).
