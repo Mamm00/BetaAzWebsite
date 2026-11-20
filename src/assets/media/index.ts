@@ -46,11 +46,20 @@ const MEDIA: Record<string, import('astro').ImageMetadata> = {
   'palette-reference.jpg': paletteRef,
 };
 
-/** Resolve a "/media/<file>" reference to the imported asset URL. */
-export function media(ref: string | null): string | null {
+/** Resolve a "/media/<file>" reference to the imported asset metadata object.
+ *  Returning the OBJECT (not .src) lets Astro's <Image> run its full
+ *  optimization pipeline: AVIF/WebP variants, real multi-width srcset,
+ *  and compression. Passing .src as a string bypasses all of that. */
+export function media(ref: string | null): import('astro').ImageMetadata | null {
   if (!ref) return null;
   const name = ref.split('/').pop() ?? '';
-  return MEDIA[name]?.src ?? null;
+  return MEDIA[name] ?? null;
+}
+
+/** Raw URL string — only for non-<Image> contexts (rare). */
+export function mediaUrl(ref: string | null): string | null {
+  const m = media(ref);
+  return m?.src ?? null;
 }
 
 export const MEDIA_FILES = Object.keys(MEDIA);

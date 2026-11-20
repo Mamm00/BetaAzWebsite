@@ -8,7 +8,7 @@ import { Image } from 'astro:assets';
 import { media } from '../assets/media';
 import { fabricArt } from '../lib/fabricArt';
 import { t } from '../lib/i18n';
-import { locUrl, type Locale } from '../lib/url';
+import { locUrl, absUrl, type Locale } from '../lib/url';
 import { getFabric, relatedFabrics, priceLabel, getGrade, grades } from '../lib/content';
 import { waLink } from '../lib/wa';
 import { COMPANY } from '../data/company';
@@ -61,9 +61,9 @@ const breadcrumbJsonld = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: locale === 'ar' ? 'الرئيسية' : 'Home', item: `${Astro.site}/` },
-    { '@type': 'ListItem', position: 2, name: t(locale, 'nav.fabrics'), item: `${Astro.site}${locUrl(locale, 'fabrics')}` },
-    { '@type': 'ListItem', position: 3, name: locale === 'ar' ? fabric.name.ar : fabric.name.en, item: `${Astro.site}${locUrl(locale, `fabrics/${fabric.slug}`)}` },
+    { '@type': 'ListItem', position: 1, name: locale === 'ar' ? 'الرئيسية' : 'Home', item: absUrl(`${locale}/`, Astro.site!.toString()) },
+    { '@type': 'ListItem', position: 2, name: t(locale, 'nav.fabrics'), item: absUrl(`${locale}/fabrics`, Astro.site!.toString()) },
+    { '@type': 'ListItem', position: 3, name: locale === 'ar' ? fabric.name.ar : fabric.name.en, item: absUrl(`${locale}/fabrics/${fabric.slug}`, Astro.site!.toString()) },
   ],
 };
 
@@ -96,7 +96,7 @@ const waText =
       <div class="azt-media-col" style="position: sticky; inset-block-start: 90px; display: flex; flex-direction: column; gap: 16px;">
         <figure class="azt-card" style="margin: 0; overflow: hidden; aspect-ratio: 4 / 5; position: relative;">
           {photoUrl ? (
-            <Image src={photoUrl} alt={t(locale, 'product.alt.hero', { name: locale === 'ar' ? fabric.name.ar : fabric.name.en })} width={1200} height={1500} widths={[500, 800, 1000, 1200]} sizes="(min-width: 1024px) 40vw, 100vw" loading="eager" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <Image src={photoUrl} alt={t(locale, 'product.alt.hero', { name: locale === 'ar' ? fabric.name.ar : fabric.name.en })} width={1200} height={1500} widths={[500, 800, 1000, 1200]} sizes="(min-width: 1024px) 40vw, 100vw" format="avif" loading="eager" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
           ) : (
             <div set:html={fabricArt({ seed: fabric.seed ?? 0, shade: fabric.shades[0]?.hex ?? '#C8A45C', grade: fabric.grade, construction: fabric.composition, w: 1200, h: 1500 })} style="width: 100%; height: 100%;" />
           )}
@@ -179,7 +179,7 @@ const waText =
           <div slot="gallery" class="azt-cv">
             <h2 style="font-size: 1.2rem;">{t(locale, 'product.galleryTab')}</h2>
             {photoUrl ? (
-              <Image src={photoUrl} alt={t(locale, 'product.alt.macro', { name: locale === 'ar' ? fabric.name.ar : fabric.name.en })} width={1600} height={1000} widths={[800, 1200, 1600]} sizes="(min-width: 1024px) 60vw, 100vw" loading="lazy" decoding="async" style="width: 100%; border-radius: var(--azt-radius); border: 1px solid var(--azt-hairline);" />
+              <Image src={photoUrl} alt={t(locale, 'product.alt.macro', { name: locale === 'ar' ? fabric.name.ar : fabric.name.en })} width={1600} height={1000} widths={[800, 1200, 1600]} sizes="(min-width: 1024px) 60vw, 100vw" format="avif" loading="lazy" decoding="async" style="width: 100%; border-radius: var(--azt-radius); border: 1px solid var(--azt-hairline);" />
             ) : (
               <div set:html={fabricArt({ seed: (fabric.seed ?? 0) + 11, shade: fabric.shades[Math.min(1, fabric.shades.length - 1)]?.hex ?? '#C8A45C', grade: fabric.grade, construction: fabric.composition, w: 1600, h: 1000 })} style="aspect-ratio: 16 / 10; border-radius: var(--azt-radius); border: 1px solid var(--azt-hairline);" />
             )}

@@ -34,17 +34,18 @@ const photoUrl = media(fabric.photo);
 
 <figure class="azt-fabric-img" style={`aspect-ratio: ${cssRatio}; margin: 0; overflow: hidden; background: var(--color-sand-100);`}>
   {photoUrl ? (
-    <Image
-      src={photoUrl}
-      alt={alt}
-      width={dims.w}
-      height={dims.h}
-      widths={[400, 640, 800, 1000, 1280, 1600]}
-      sizes={variant === 'hero' ? '(min-width: 1024px) 100vw, 100vw' : '(min-width: 640px) 33vw, 100vw'}
-      loading={variant === 'hero' ? 'eager' : 'lazy'}
-      decoding="async"
-      style="width: 100%; height: 100%; object-fit: cover; display: block;"
-    />
+      <Image
+        src={photoUrl}
+        alt={alt}
+        width={dims.w}
+        height={dims.h}
+        widths={[400, 640, 800, 1000, 1280, 1600]}
+        sizes={variant === 'hero' ? '(min-width: 1024px) 100vw, 100vw' : '(min-width: 640px) 33vw, 100vw'}
+        format="avif"
+        loading={variant === 'hero' ? 'eager' : 'lazy'}
+        decoding="async"
+        style="width: 100%; height: 100%; object-fit: cover; display: block;"
+      />
   ) : (
     <div set:html={fabricArt({ seed: fabric.seed ?? 0, shade: fabric.shades[0]?.hex ?? '#C8A45C', grade: fabric.grade, construction: fabric.composition, w: dims.w, h: dims.h })} style="width: 100%; height: 100%;" />
   )}

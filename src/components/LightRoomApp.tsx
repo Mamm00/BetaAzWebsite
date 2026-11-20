@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { t } from '../lib/i18n';
 import type { Locale } from '../lib/url';
 import { fabrics } from '../lib/content';
-import { media } from '../assets/media';
+import { mediaUrl } from '../assets/media';
 
 export interface Props {
   locale: Locale;
@@ -29,7 +29,7 @@ export default function LightRoomApp({ locale }: Props) {
   const [light, setLight] = useState<Light>('d65');
 
   const f = fabrics.find((x) => x.slug === fabricSlug)!;
-  const photo = media(f.photo);
+  const photo = mediaUrl(f.photo);
 
   return (
     <div style={{ display: 'grid', gap: 24, maxWidth: 860 }}>
